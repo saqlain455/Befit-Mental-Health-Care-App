@@ -1,0 +1,33 @@
+{
+  "expo": {
+    "name": "proj",
+    "slug": "proj",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.behance.net%2Fgallery%2F62518925%2FMedical-Record-App&psig=AOvVaw2uGRTrNlNDvUxne5uPxFXA&ust=1633540920768000&source=images&cd=vfe&ved=0CAsQjRxqFwoTCKj4x6rks_MCFQAAAAAdAAAAABAD",
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#FFFFFF"
+      },
+      "package": "com.maliksaqlai.proj"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    }
+  }
+}
