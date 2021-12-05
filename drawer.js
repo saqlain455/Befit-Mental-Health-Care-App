@@ -32,6 +32,7 @@ import CancelOrder from './components/cancelOrder';
 import DoctorprofilewithSendReport from './components/doctorprofilewithSendReport';
 import { Payment } from "./components/payment";
 // import pastAppointments from './Component/pastAppointments';
+import VideoCall from "./videoCall";
 
 const Drawer = createDrawerNavigator()
 const Stack = createStackNavigator()
@@ -246,6 +247,16 @@ export const MyDrawer = ({ navigation }) => {
           drawerLabel: 'Payment module',
           headerTintColor: 'blue'
         })}
+        
+      />
+                  <Drawer.Screen
+        name='VideoCall'
+        component={VideoCall}
+        options={({ navigation }) => ({
+          drawerLabel: 'VideoCall',
+          headerTintColor: 'blue'
+        })}
+        
       />
       
       <Drawer.Screen

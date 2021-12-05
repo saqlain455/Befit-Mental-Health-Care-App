@@ -38,6 +38,7 @@
     "react-native-linear-gradient": "^2.5.6",
     "react-native-pager-view": "5.0.12",
     "react-native-paper": "*",
+    "react-native-peerjs": "^1.0.4",
     "react-native-reanimated": "~2.1.0",
     "react-native-safe-area-context": "3.2.0",
     "react-native-screens": "~3.0.0",
@@ -46,7 +47,12 @@
     "react-native-tab-view": "^3.0.0",
     "react-native-unimodules": "~0.13.3",
     "react-native-vector-icons": "^8.1.0",
-    "react-native-web": "^0.17.1"
+    "react-native-web": "^0.17.1",
+    "react-native-webrtc": "^1.94.0",
+    "react-redux": "^7.2.6",
+    "redux": "^4.1.2",
+    "redux-thunk": "^2.4.1",
+    "socket.io-client": "^4.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.15.0"
