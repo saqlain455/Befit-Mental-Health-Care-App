@@ -10,40 +10,83 @@ import {
   TextInput,
   TouchableOpacity,
   View,
-  useColorScheme
+  useColorScheme,
+  ActivityIndicator
 } from "react-native";
 import { Caption, Headline, Subheading, Title } from "react-native-paper";
+import React,{useState} from "react";
+import { useEffect } from "react/cjs/react.development";
 
-import React from "react";
-
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import Blogitem from './blogitem';
 const Blog = ({navigation}) => {
+
+  const [getlist, setlist] = useState([]);
+
+  const [loading,setloading]=useState(false);
+  useEffect(()=>{
+    viewBlog()
+  },[])
+
+  
+
+
+  async function viewBlog() {
+    try {
+      const token = await AsyncStorage.getItem('Token');
+      if (token !== null) {
+        // console.log(token);
+        console.log((token))
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", "Bearer " + token);
+        myHeaders.append("Content-Type", "application/json");
+        var requestOptions = {
+          method: 'GET',
+          headers: myHeaders
+        };
+
+        fetch("http://192.168.18.48:3000/patient/blog/", requestOptions)
+          .then(response => response.json())
+          .then(result => {
+            setloading(true)
+            setlist(result)
+            console.log('your blog result',getlist)
+          })
+          .catch(error => console.log('error', error));
+        return token
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  useEffect(()=>{
+    setloading(false)
+  },[getlist])
+
   return (
     <View style={{ marginHorizontal: 20, paddingTop: 20 }}>
-
-    <Title style={{fontSize:30}}>Befit Health Blogs</Title>
+      <View style={{display:'flex',flexDirection:'row',justifyContent:'space-between'}}>
+          <Title style={{fontSize:20}}>Befit Health Blogs</Title>
+      </View>
       <ScrollView>
-        {[1, 2, 3, 4].map((item, index) => {
+        {
+            loading ? (
+              <View style={{ flex: 1, padding: 20 }}>
+                <ActivityIndicator size="large" color="blue" />
+                <Text>Loading Data ...</Text>
+              </View>
+            )
+            :
+       getlist.map((item, index) => {
           return (
             <View key={index} style={{ paddingTop:50 }} >
-              <Image
-                source={{
-                  uri: "https://picsum.photos/seed/picsum/200/300"
-                }}
-                style={{
-                  width: "100%",
-                  height: 200,
-                  alignSelf: "center",
-                  marginHorizontal: 50
-                }}
-              />
-              <Title style={{fontSize:30,color:"black"}}>Neutration </Title>
+              <Blogitem item={item}/>
+              <Title style={{fontSize:30,color:"black"}}>{item.title} </Title>
 
-              <Caption>BY Dr .Ahmad 11/12/2021</Caption>
+              <Caption>BY {item.poster?.name} {item.date}</Caption>
               <Text style={{fontSize:20,color:"grey"}}>
-                We are huge fans of Mind and the work they do to support those
-                living with Mental Health problems. They use their blog to
-                publish personal and relatable stories to help those living with
-                mental illness feel cared about, understood and listened to.
+              {item.content}
               </Text>
             </View>
           );

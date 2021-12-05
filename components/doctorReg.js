@@ -31,15 +31,22 @@ export const DoctorReg = (props) => {
     gender: "",
     city: "",
     experience: "",
-    about: ""
+    about: "",
   });
 
   const AddDoctor = async () => {
     var token = await AsyncStorage.getItem("Token");
+    
+    var data = await AsyncStorage.getItem("data");
+    const d = JSON.parse(data);
+    id = d.user._id;
+
+
+
     var myHeaders = new Headers();
     myHeaders.append("Authorization", "Bearer " + token);
     myHeaders.append("Content-Type", "application/json");
-    var raw = JSON.stringify(doctor);
+    var raw = JSON.stringify({...doctor,_id:id});
     var requestOptions = {
       method: "post",
       headers: myHeaders,
@@ -47,7 +54,7 @@ export const DoctorReg = (props) => {
       redirect: "follow"
     };
 
-    fetch("http://10.113.59.68:3000/users/Requestdoctor/", requestOptions)
+    fetch("http://192.168.18.48:3000/users/Requestdoctor/", requestOptions)
       .then((response) => response.text())
       .then((result) => {
         console.log("HI bro doctor has saved in db");

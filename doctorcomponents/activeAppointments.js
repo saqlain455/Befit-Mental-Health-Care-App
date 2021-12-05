@@ -18,7 +18,8 @@ import {
   TextInput,
   TouchableOpacity,
   View,
-  useColorScheme
+  useColorScheme,
+  ActivityIndicator
 } from "react-native";
 import { Header, LearnMoreLinks } from "react-native/Libraries/NewAppScreen";
 import React, { Component, useEffect, useState } from "react";
@@ -32,6 +33,7 @@ function ActiveAppointments({ navigation }) {
     const [appoinementdata, setdata] = useState([]);
     const [filterAppointment,setfilterAppointment]=useState([])
 
+    const [loading,setloading]=useState(false);
 
   const cancelappointment = async (id) => {
 
@@ -52,7 +54,38 @@ function ActiveAppointments({ navigation }) {
     };
 
     fetch(
-      "http://10.113.59.68:3000/patient/cancelAppointment/" + id,
+      "http://192.168.18.48:3000/doctor/cancelAppointment/" + id,
+      requestOptions
+    )
+      .then((response) => response.json())
+      .then((result) => {
+        console.log("HI bro your appointment data is updated");
+        console.log(result);
+        getappointment()
+      })
+      .catch((error) => console.log("error", error));
+  };
+
+  const acceptappointment = async (id) => {
+
+    var myHeaders = new Headers();
+    var t
+    var token = await AsyncStorage.getItem("Token");
+    t = token;
+
+    console.log("ID and token is");
+    console.log(t + "token and id is " + id);
+    myHeaders.append("Authorization", "Bearer " + t);
+    myHeaders.append("Content-Type", "application/json");
+
+    var requestOptions = {
+      method: "PUT",
+      headers: myHeaders,
+      redirect: "follow"
+    };
+
+    fetch(
+      "http://192.168.18.48:3000/doctor/acceptAppointment/" + id,
       requestOptions
     )
       .then((response) => response.json())
@@ -86,12 +119,13 @@ function ActiveAppointments({ navigation }) {
     };
 
     fetch(
-      "http://10.113.59.68:3000/patient/ViewAppointment/" + id,
+      "http://192.168.18.48:3000/doctor/ViewAppointment/" + id,
       requestOptions
     )
       .then((response) => response.json())
       .then((result) => {
-        console.log("HI bro your appointment data is there");
+        setloading(true)
+        console.log("HI doctor your appointment data is there");
         console.log(result);
         setdata(result);
       })
@@ -101,6 +135,7 @@ function ActiveAppointments({ navigation }) {
   async function fiterApoinement() {
       const ap=await appoinementdata.filter((item)=>item.status==="active")
       setfilterAppointment(ap)
+      setloading(false)
   }
 
   useEffect(() => {
@@ -111,7 +146,8 @@ function ActiveAppointments({ navigation }) {
     useEffect(() => {
     getappointment();
   }, []);
-   
+
+
   return (
     <View>
       <View style={styles.container}>
@@ -122,16 +158,32 @@ function ActiveAppointments({ navigation }) {
             <DataTable.Title>Date</DataTable.Title>
             <DataTable.Title>Action</DataTable.Title>
           </DataTable.Header>
-
-          {filterAppointment.map((item,index) => {
+      
+          {
+           loading ? (
+            <View style={{ flex: 1, padding: 20 }}>
+              <ActivityIndicator size="large" color="blue" />
+              <Text>Loading Data ...</Text>
+            </View>
+          )
+          :
+          filterAppointment.map((item,index) => {
            return  <DataTable.Row key={index} style={styles.row}>
-              <DataTable.Cell>{item.doctor.name}</DataTable.Cell>
+              <DataTable.Cell>{item.patient.name}</DataTable.Cell>
               <DataTable.Cell>{item.time}</DataTable.Cell>
               <DataTable.Cell >{item.date}</DataTable.Cell>
               <DataTable.Cell>
+                <TouchableOpacity onPress={()=>acceptappointment(item._id)}>
+                  <Image
+                    style={{ width: 15, height: 30 ,marginLeft: 50,}}
+                    source={require("../Image/Accept.svg")}
+                  />
+                </TouchableOpacity>
+              </DataTable.Cell>
+              <DataTable.Cell>
                 <TouchableOpacity onPress={()=>cancelappointment(item._id)}>
                   <Image
-                    style={{ width: 20, height: 30 ,marginLeft: 50,}}
+                    style={{ width: 15, height: 30 ,marginLeft: 50,}}
                     source={require("../Image/1024px-Crystal_button_cancel.svg.png")}
                   />
                 </TouchableOpacity>

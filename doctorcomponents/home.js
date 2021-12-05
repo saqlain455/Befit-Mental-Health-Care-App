@@ -19,6 +19,7 @@ import OrderMedicine from './orderMedicine';
 import {SearchDoctor} from './searchdoctor';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
+import {AppointmentsHistory} from '../drawer1'
 
 let TouchableCmp = TouchableOpacity;
 export const Home=({navigation})=>{
@@ -85,75 +86,31 @@ export const Home=({navigation})=>{
     />
   </Card>   
         <View style={styles.gridItem}>
-        <TouchableCmp style={{ flex: 1 }} onPress={()=>navigation.navigate('SearchDoctor')} >
+        <TouchableCmp style={{ flex: 1 }} onPress={()=>navigation.navigate('AppointmentsHistory')} >
           <View
 style={{ ...styles.container, ...{ backgroundColor: 'white' } }}
           >
             <MaterialIcons name='book-online' size={50} color="blue" style={{marginTop: 35}}/>
             <Text style={styles.title} numberOfLines={2}>
-              Book Appointment
+             Appointment
             </Text>
           </View>
 
         </TouchableCmp>
-        <TouchableCmp style={{ flex: 1 }} onPress={()=>navigation.navigate('OrderMedicine')}  >
-        <View
-style={{ ...styles.container,...{ backgroundColor: 'white' } }}
-        >
-          <MaterialIcons name='medical-services' size={50} color="blue" style={{marginTop: 35}}/>
-          <Text style={styles.title} numberOfLines={2}>
-            Order Medicine
-          </Text>
-        </View>
-      </TouchableCmp>
       </View>  
       <View style={styles.gridItem}>
-      <TouchableCmp style={{ flex: 1 }} onPress={()=>navigation.navigate('Health')}>
-      <View
-style={{ ...styles.container, ...{ backgroundColor: 'white' } }}
-      >
-        <MaterialIcons name='sync' size={50} color="blue" style={{marginTop: 35}}/>
-        <Text style={{...styles.title,...{fontSize:12}}} numberOfLines={2}>
-         Mental Health Analysis
-        </Text>
-      </View>
-
-    </TouchableCmp>
-      <TouchableCmp style={{ flex: 1 }} onPress={()=>navigation.navigate('SearchDoctor')} >
+      <TouchableCmp style={{ flex: 1 }} onPress={()=>navigation.navigate('Blog')} >
       <View
 style={{ ...styles.container,...{ backgroundColor: 'white' } }}
       >
         <MaterialIcons name='search' size={50} color="blue" style={{marginTop: 35}}/>
         <Text style={styles.title} numberOfLines={2}>
-          Search Doctors
+        Blogs
         </Text>
       </View>
     </TouchableCmp>
     
     </View>  
-    {/* <View style={styles.gridItem}>
-    <TouchableCmp style={{ flex: 1 }} onPress={()=>navigation.navigate('Blog')} >
-    <View
-style={{ ...styles.container, ...{ backgroundColor: 'white' } }}
-    >
-    <FontAwesome5 name="blog" size={50} color="blue" style={{marginTop: 35}} />
-      <Text style={styles.title} numberOfLines={2}>
-        Blogs
-      </Text>
-    </View>
-  </TouchableCmp>
-    <TouchableCmp style={{ flex: 1 }} onPress={()=>navigation.navigate('SearchDoctor')} >
-    <View
-style={{ ...styles.container,...{ backgroundColor: 'white' } }}
-    >
-    <MaterialIcons name='handyman' size={50} color="blue" style={{marginTop: 35}}/>
-      <Text style={styles.title} numberOfLines={2}>
-       Setting
-      </Text>
-    </View>
-  </TouchableCmp>
-  
-  </View>            */}
               
         </ScrollView>
 

@@ -1,5 +1,5 @@
 import React, { useState,useEffect } from 'react';
-import { Text, View, StyleSheet, Dimensions, ScrollView,Alert,ActivityIndicator } from 'react-native';
+import { Text, View, StyleSheet, Dimensions, ScrollView,Alert,ActivityIndicator,Button,TouchableOpacity } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { MaterialIcons } from '@expo/vector-icons';
@@ -11,8 +11,8 @@ import {
   StackedBarChart,
   } from 'react-native-chart-kit';
 const Tab = createMaterialTopTabNavigator();
-
-
+import AcceptedAppointment from  './report/acceptedAppointment';
+import ShareModelData from "./shareModelData";
   
 export const Report=(props)=> {
   
@@ -25,6 +25,14 @@ export const Report=(props)=> {
     "sadness": 0,
   });
   const [isloading,setloading]=React.useState(true);
+
+
+const shareit=()=>{
+  props.navigation.navigate('ShareModelData',{result:getResult});
+
+  
+}
+
   useEffect(() => {
     console.log("my props")
     console.log(props.route.params.Cresult)
@@ -45,6 +53,10 @@ export const Report=(props)=> {
       <ScrollView>
 
       <View style={styles.container}>
+
+      <View  style={{display: 'flex'}}>
+        <TouchableOpacity style={{display: 'flex', alignSelf: 'flex-end',backgroundColor:'red',width:'25%',borderRadius:20,justifyContent:'center',alignItems:'center'}} onPress={shareit} ><Text style={{color:'white',fontSize:20}}>Share it </Text></TouchableOpacity>
+      </View>
       <View>
       <BarChart data={{
       labels: [ 'anger',

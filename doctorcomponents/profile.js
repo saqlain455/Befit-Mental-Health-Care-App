@@ -12,7 +12,8 @@ import {
   Text,
   TextInput,
   TouchableOpacity,
-  View
+  View,
+  ActivityIndicator
 } from "react-native";
 import {
   FontAwesome,
@@ -49,6 +50,8 @@ export const Profile = (props) => {
     gender: "",
     dob: ""
   });
+
+  const [loading,setloading]=useState(false);
   function btoa(input) {
     var chars =
       "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
@@ -116,7 +119,7 @@ export const Profile = (props) => {
     };
 
     fetch(
-      "http://10.113.59.68:3000/patient/updateProfile/" + id,
+      "http://192.168.18.48:3000/patient/updateProfile/" + id,
       requestOptions
     )
       .then((response) => response.text())
@@ -130,6 +133,7 @@ export const Profile = (props) => {
   //   Tomorrorw i will fetch data from api by user id that is place in asyncStorage
 
   const fetchUserData = async () => {
+    setloading(true)
     var data = await AsyncStorage.getItem("data");
     if (data) {
       console.log("name is here!");
@@ -149,15 +153,18 @@ export const Profile = (props) => {
       };
 
       fetch(
-        "http://10.113.59.68:3000/patient/getownData/" + d.user._id,
+        "http://192.168.18.48:3000/patient/getownData/" + d.user._id,
         requestOptions
       )
         .then((response) => response.json())
         .then((result) => {
           setdata(result);
           var base64Flag = "data:image/jpeg;base64,";
-          var imageStr = arrayBufferToBase64(result.img.data.data);
-          setimg(base64Flag + imageStr);
+          if(result.img){
+            var imageStr = arrayBufferToBase64(result.img.data.data);
+            setimg(base64Flag + imageStr);
+          }
+          setloading(false)
           console.log(result);
         })
         .catch((error) => console.log("error", error));
@@ -197,7 +204,7 @@ export const Profile = (props) => {
   //   };
 
   //   fetch(
-  //     "http://10.113.59.68:3000/patient/Order/60bf5057874ad732e888afa1",
+  //     "http://192.168.18.48:3000/patient/Order/60bf5057874ad732e888afa1",
   //     requestOptions
   //   )
   //     .then((response) => response.json())
@@ -259,7 +266,7 @@ export const Profile = (props) => {
     //append created photo{} to formdata
     formData.append("filesent", photo);
     //data.append("description", "2 panadol");
-    fetch("http://10.113.59.68:3000/patient/updateProfilePic/" + d.user._id, {
+    fetch("http://192.168.18.48:3000/patient/updateProfilePic/" + d.user._id, {
       method: "put",
       body: formData
     })
@@ -275,8 +282,13 @@ export const Profile = (props) => {
   };
 
   return (
+    loading===true ? <View style={styles.loading}> 
+    <ActivityIndicator size="large" color="blue" />
+   </View>:
     <View style={styles.container}>
       <ScrollView>
+
+
         <View
           style={{
             height: 200,

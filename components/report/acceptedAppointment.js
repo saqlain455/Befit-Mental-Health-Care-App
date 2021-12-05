@@ -19,17 +19,27 @@ import {
   TouchableOpacity,
   View,
   useColorScheme,
-  Alert,
 } from "react-native";
 import { Header, LearnMoreLinks } from "react-native/Libraries/NewAppScreen";
 import React, { Component, useEffect, useState } from "react";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { DataTable } from "react-native-paper";
-import DetailPatient from './detailPatient'
+ 
+
+// there we get mental health report data from Report  component 
+// share button will  be  in report component
+
+
 function AcceptedAppointments({ navigation }) {
   const [appoinementdata, setdata] = useState([]);
   const [filterAppointment, setfilterAppointment] = useState([]);
+
+const shareit=()=>{
+  alert("Share it")
+
+}
+
   const getappointment = async () => {
     var myHeaders = new Headers();
     var t, id;
@@ -51,7 +61,7 @@ function AcceptedAppointments({ navigation }) {
     };
 
     fetch(
-      "http://192.168.18.48:3000/doctor/ViewAppointment/" + id,
+      "http://192.168.18.48:3000/patient/ViewAppointment/" + id,
       requestOptions
     )
       .then((response) => response.json())
@@ -86,27 +96,23 @@ function AcceptedAppointments({ navigation }) {
             <DataTable.Title>Name</DataTable.Title>
             <DataTable.Title>Time</DataTable.Title>
             <DataTable.Title>Date</DataTable.Title>
-            <DataTable.Title>Detail</DataTable.Title>
+            <DataTable.Title>Share</DataTable.Title>
           </DataTable.Header>
           {filterAppointment.map((item, index) => {
             return (
               <DataTable.Row key={index} style={styles.row}>
-                <DataTable.Cell>{item.patient.name}</DataTable.Cell>
+                <DataTable.Cell>{item.doctor.name}</DataTable.Cell>
                 <DataTable.Cell>{item.time}</DataTable.Cell>
                 <DataTable.Cell>{item.date}</DataTable.Cell>
-                <TouchableOpacity
-                  key={index}
-                  onPress={() => {
-                  navigation.navigate('DetailPatient',{item:item})
-                  }}
-                >
-                  <DataTable.Cell>
-                    <Text style={{ color: "seagreen", fontWeight: "bold" }}>
-                      {" "}
-                      View 
-                    </Text>
-                  </DataTable.Cell>
-                </TouchableOpacity>
+                <DataTable.Cell>
+                  <Button
+                    title="View"
+                    style={{ color: "seagreen", fontWeight: "bold" }}
+                    onPress={() => shareit()}
+                  >
+                    {" "}
+                  </Button>
+                </DataTable.Cell>
               </DataTable.Row>
             );
           })}

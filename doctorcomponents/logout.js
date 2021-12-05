@@ -15,6 +15,7 @@ export const Logout=(props)=>{
     const removeData = async () => {
         try {
           await AsyncStorage.removeItem('Token')
+          await AsyncStorage.removeItem('DoctorToken')
           props.navigation.replace('SignIn')
   
         } catch(e) {

@@ -24,7 +24,13 @@ import {Profile} from './components/profile'
 import { SearchDoctor } from './components/searchdoctor.js';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
-
+import AcceptedOrder from './components/acceptedOrder';
+import ActiveOrder from './components/activeOrder';
+import PastOrder from './components/pastOrder';
+import OrderDetail from './components/orderDetails';
+import CancelOrder from './components/cancelOrder';
+import DoctorprofilewithSendReport from './components/doctorprofilewithSendReport';
+import { Payment } from "./components/payment";
 // import pastAppointments from './Component/pastAppointments';
 
 const Drawer = createDrawerNavigator()
@@ -144,7 +150,21 @@ export const AppointmentsHistory = () => {
       <Stack1.Screen name='ActiveAppointments' component={ActiveAppointments} />
       <Stack1.Screen name='AcceptedAppointments' component={AcceptedAppointments} />
       <Stack1.Screen name='PastAppointments' component={PastAppointments} />
+      <Stack1.Screen name='DoctorprofilewithSendReport' component={DoctorprofilewithSendReport} />
     </Stack1.Navigator>
+  )
+}
+
+const Stack2 = createStackNavigator()
+export const OrderTrack = () => {
+  return (
+    <Stack2.Navigator>
+      <Stack2.Screen name='OrderDetails' component={OrderDetail} />
+      <Stack2.Screen name='CancelOrder' component={CancelOrder} />
+      <Stack2.Screen name='ActiveOrder' component={ActiveOrder} />
+      <Stack2.Screen name='AcceptedOrder' component={AcceptedOrder} />
+      <Stack2.Screen name='CompletedOrder' component={PastOrder} />
+    </Stack2.Navigator>
   )
 }
 // export const Blog = (props) => {
@@ -203,6 +223,14 @@ export const MyDrawer = ({ navigation }) => {
           headerTintColor: 'blue'
         })}
       />
+        <Drawer.Screen
+        name='OrderTrack'
+        component={OrderTrack}
+        options={({ navigation }) => ({
+          drawerLabel: 'OrderTrack',
+          headerTintColor: 'blue'
+        })}
+      />
       <Drawer.Screen
         name='Blog'
         component={Blog}
@@ -211,6 +239,15 @@ export const MyDrawer = ({ navigation }) => {
           headerTintColor: 'blue'
         })}
       />
+            <Drawer.Screen
+        name='Payment'
+        component={Payment}
+        options={({ navigation }) => ({
+          drawerLabel: 'Payment module',
+          headerTintColor: 'blue'
+        })}
+      />
+      
       <Drawer.Screen
         name='Logout'
         component={Logout}

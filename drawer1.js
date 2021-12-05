@@ -4,25 +4,29 @@ import { Button, Image, StyleSheet, Text, View } from 'react-native';
 import { NavigationContainer, getActionFromState } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
 
-import AcceptedAppointments from './components/acceptedAppointments';
-import ActiveAppointments from './components/activeAppointments';
-import AppointmentDate from './components/appointmentdate.js';
-import AppointmentDetails from './components/appointmentDetails';
+import AcceptedAppointments from './doctorcomponents/acceptedAppointments';
+import ActiveAppointments from './doctorcomponents/activeAppointments';
+import AppointmentDate from './doctorcomponents/appointmentdate.js';
+import AppointmentDetails from './doctorcomponents/appointmentDetails';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import Blog from './components/blogpage'
-import CancelAppointments from './components/cancelAppointments';
-import { DoctorProfile } from './components/doctorprofile';
-import { DoctorReg } from './components/doctorReg'
+import Blog from './doctorcomponents/blogpage'
+import CancelAppointments from './doctorcomponents/cancelAppointments';
+import { DoctorProfile } from './doctorcomponents/doctorprofile';
+import { DoctorReg } from './doctorcomponents/doctorReg'
 import Feather from "react-native-vector-icons/Feather";
-import { Health } from './components/health';
-import { Home } from './components/home'
-import { Logout } from './components/logout.js'
-import OrderMedicine from './components/orderMedicine.js';
-import PastAppointments from './components/pastAppointments';
-import {Profile} from './components/profile'
-import { SearchDoctor } from './components/searchdoctor.js';
+import { Health } from './doctorcomponents/health';
+import { Home } from './doctorcomponents/home'
+import { Logout } from './doctorcomponents/logout.js'
+import OrderMedicine from './doctorcomponents/orderMedicine.js';
+import PastAppointments from './doctorcomponents/pastAppointments';
+import {Profile} from './doctorcomponents/profile'
+import { SearchDoctor } from './doctorcomponents/searchdoctor.js';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { createStackNavigator } from '@react-navigation/stack';
+import  CreateBlog from './doctorcomponents/createBlog'
+import DetailPatient from './doctorcomponents/detailPatient'
+import Prescribedmedicine from "./doctorcomponents/prescribedmedicine";
+import { Report } from "./doctorcomponents/report";
 
 //import {Profile} from './components/profile.js'
 
@@ -152,7 +156,23 @@ export const AppointmentsHistory = () => {
       <Stack1.Screen name='ActiveAppointments' component={ActiveAppointments} />
       <Stack1.Screen name='AcceptedAppointments' component={AcceptedAppointments} />
       <Stack1.Screen name='PastAppointments' component={PastAppointments} />
+      <Stack1.Screen name='DetailPatient' component={DetailPatient} />
+      <Stack1.Screen name='Prescribedmedicine' component={Prescribedmedicine} />
+      <Stack1.Screen name='Report' component={Report} />
     </Stack1.Navigator>
+  )
+}
+
+const Stack2 = createStackNavigator()
+export const BlogScreen = () => {
+  return (
+    <Stack2.Navigator>
+      <Stack2.Screen name='BlogScreen' component={Blog} />
+      <Stack2.Screen name='CreateBlog' component={CreateBlog} />
+      <Stack2.Screen name='ActiveAppointments' component={ActiveAppointments} />
+      <Stack2.Screen name='AcceptedAppointments' component={AcceptedAppointments} />
+      <Stack2.Screen name='PastAppointments' component={PastAppointments} />
+    </Stack2.Navigator>
   )
 }
 // export const Blog = (props) => {
@@ -187,22 +207,14 @@ export const MyDrawer1 = ({ navigation }) => {
           headerTintColor: 'blue'
         })}
       />
-      <Drawer.Screen
+      {/* <Drawer.Screen
         name='DoctorReg'
         component={DoctorReg}
         options={({ navigation }) => ({
           drawerLabel: 'Are u doctor ?',
           headerTintColor: 'blue'
         })}
-      />
-      <Drawer.Screen
-        name='SearchDoctor'
-        component={SearchDoctor}
-        options={({ navigation }) => ({
-          drawerLabel: 'Search doctor',
-          headerTintColor: 'blue'
-        })}
-      />
+      /> */}
       <Drawer.Screen
         name='AppointmentsHistory'
         component={AppointmentsHistory}
@@ -213,7 +225,7 @@ export const MyDrawer1 = ({ navigation }) => {
       />
       <Drawer.Screen
         name='Blog'
-        component={Blog}
+        component={BlogScreen}
         options={({ navigation }) => ({
           drawerLabel: 'Health Blog',
           headerTintColor: 'blue'

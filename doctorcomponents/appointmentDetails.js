@@ -31,7 +31,6 @@ import AcceptedAppointments from './acceptedAppointments';
 import ActiveAppointments from './activeAppointments';
 import{ CancelAppointments }from './cancelAppointments';
 import PastAppointments from './pastAppointments';
-
 function App({ navigation }) {
    
    

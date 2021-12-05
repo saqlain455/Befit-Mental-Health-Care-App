@@ -52,7 +52,7 @@ function CancelAppointments({ navigation }) {
     };
 
     fetch(
-      "http://10.113.59.68:3000/patient/ViewAppointment/" + id,
+      "http://192.168.18.48:3000/doctor/ViewAppointment/" + id,
       requestOptions
     )
       .then((response) => response.json())
@@ -93,7 +93,7 @@ function CancelAppointments({ navigation }) {
 
           {filterAppointment.map((item,index) => {
            return  <DataTable.Row key={index} style={styles.row}>
-              <DataTable.Cell>{item.doctor.name}</DataTable.Cell>
+              <DataTable.Cell>{item.patient.name}</DataTable.Cell>
               <DataTable.Cell>{item.time}</DataTable.Cell>
               <DataTable.Cell >{item.date}</DataTable.Cell>
            <DataTable.Cell ><Text style={{color:'red',fontWeight:'bold'}}> Canceled</Text></DataTable.Cell>

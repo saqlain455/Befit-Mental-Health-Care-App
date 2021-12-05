@@ -15,6 +15,7 @@ import { MaterialIcons } from '@expo/vector-icons';
 import { NavigationContainer } from '@react-navigation/native';
 import {Report} from './report'
 import { VoiceScreen } from './voicescreen';
+import ShareModelData from "./shareModelData";
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 
@@ -26,7 +27,7 @@ function TextScreen({navigation}) {
     console.log(getText)
     const t=getText
     formData.append('text', t);
-    fetch('http://10.113.59.68:3000/patient/predictText/'+t, {
+    fetch('http://192.168.18.48:3000/patient/predictText/'+t, {
       method: 'GET',
     })
       .then((response) => response.json())
@@ -129,6 +130,7 @@ export const Health = () => {
     <Stack1.Navigator>
       <Stack1.Screen name='MyTabs' component={MyTabs}  options={{headerShown: false}}  />
       <Stack.Screen name='Report' component={Report} options={{headerShown: false}}  />
+      <Stack.Screen name='ShareModelData' component={ShareModelData} options={{headerShown: false}}  />
     </Stack1.Navigator>
   )
 }

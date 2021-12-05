@@ -19,15 +19,13 @@ import {
   TouchableOpacity,
   View,
   useColorScheme,
-  Alert,
 } from "react-native";
-import { Header, LearnMoreLinks } from "react-native/Libraries/NewAppScreen";
 import React, { Component, useEffect, useState } from "react";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { DataTable } from "react-native-paper";
-import DetailPatient from './detailPatient'
-function AcceptedAppointments({ navigation }) {
+
+function CancelOrder({ navigation }) {
   const [appoinementdata, setdata] = useState([]);
   const [filterAppointment, setfilterAppointment] = useState([]);
   const getappointment = async () => {
@@ -50,13 +48,10 @@ function AcceptedAppointments({ navigation }) {
       redirect: "follow",
     };
 
-    fetch(
-      "http://192.168.18.48:3000/doctor/ViewAppointment/" + id,
-      requestOptions
-    )
+    fetch("http://192.168.18.48:3000/patient/ViewOrder/" + id, requestOptions)
       .then((response) => response.json())
       .then((result) => {
-        console.log("HI bro your appointment data is there");
+        console.log("HI bro your order data is there");
         console.log(result);
         setdata(result);
       })
@@ -65,7 +60,7 @@ function AcceptedAppointments({ navigation }) {
 
   async function fiterApoinement() {
     const ap = await appoinementdata.filter(
-      (item) => item.status === "accepted"
+      (item) => item.status === "canceled"
     );
     setfilterAppointment(ap);
   }
@@ -83,30 +78,23 @@ function AcceptedAppointments({ navigation }) {
       <View style={styles.container}>
         <DataTable>
           <DataTable.Header>
-            <DataTable.Title>Name</DataTable.Title>
-            <DataTable.Title>Time</DataTable.Title>
+            <DataTable.Title>id</DataTable.Title>
             <DataTable.Title>Date</DataTable.Title>
-            <DataTable.Title>Detail</DataTable.Title>
+            <DataTable.Title>Status</DataTable.Title>
           </DataTable.Header>
-          {filterAppointment.map((item, index) => {
+
+          {filterAppointment?.map((item, index) => {
             return (
               <DataTable.Row key={index} style={styles.row}>
-                <DataTable.Cell>{item.patient.name}</DataTable.Cell>
-                <DataTable.Cell>{item.time}</DataTable.Cell>
+                <DataTable.Cell>{item._id}</DataTable.Cell>
                 <DataTable.Cell>{item.date}</DataTable.Cell>
-                <TouchableOpacity
-                  key={index}
-                  onPress={() => {
-                  navigation.navigate('DetailPatient',{item:item})
-                  }}
-                >
-                  <DataTable.Cell>
-                    <Text style={{ color: "seagreen", fontWeight: "bold" }}>
-                      {" "}
-                      View 
-                    </Text>
-                  </DataTable.Cell>
-                </TouchableOpacity>
+
+                <DataTable.Cell>
+                  <Text style={{ color: "red", fontWeight: "bold" }}>
+                    {" "}
+                    Canceled
+                  </Text>
+                </DataTable.Cell>
               </DataTable.Row>
             );
           })}
@@ -132,4 +120,4 @@ const styles = StyleSheet.create({
     padding: 15,
   },
 });
-export default AcceptedAppointments;
+export default CancelOrder;

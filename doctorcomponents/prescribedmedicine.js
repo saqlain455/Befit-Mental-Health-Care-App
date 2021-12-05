@@ -17,10 +17,23 @@ import React, { useEffect, useState } from 'react';
 
 import { Divider } from 'react-native-paper';
 
-export default function OrderMedicine() {
+import AsyncStorage from "@react-native-async-storage/async-storage";
+export default function Prescribedmedicine({navigation,route}) {
   const [image, setImage] = useState(null);
-  const [loading, setloading] = useState(true)
-  const handleupload = () => {
+  const [loading, setloading] = useState(true);
+  const[desciption,setdesciption]=useState('');
+  const[address,setaddress]=useState('');
+
+  useEffect(() => {
+    console.log(desciption)
+
+  }, [desciption]);
+
+  useEffect(()=>{
+    console.log(route.params.item._id)
+  },[])
+
+  const handleupload = async() => {
 
     setloading(false)
     var photo = {
@@ -28,15 +41,20 @@ export default function OrderMedicine() {
       type: 'image/jpeg',
       name: 'photo.jpg',
     };
+    var data = await AsyncStorage.getItem("data");
+    var token = await AsyncStorage.getItem("Token");
+    const d = JSON.parse(data);
+    id = d.user._id;
 
     //use formdata
     var formData = new FormData();
     //append created photo{} to formdata
     formData.append('filesent', photo);
+    formData.append('patient_id', route.params.item._id);
+    formData.append('doctor_id', id);
+    formData.append("description", desciption);
 
-    formData.append('buyer_id', '60bf5057874ad732e888afa1');
-    //data.append("description", "2 panadol");
-    fetch('http://192.168.18.48:3000/patient/OrderMedicine', {
+    fetch('http://192.168.18.48:3000/doctor/PrescribeMedicine', {
       method: 'post',
       body: formData,
     })
@@ -44,7 +62,7 @@ export default function OrderMedicine() {
       .then((result) =>{
         console.log(result)
         setloading(true)
-        Alert.alert("Order has been saved")
+        Alert.alert("medicine has been prescribed")
       })
       .catch((error) => console.log('error', error));
   };
@@ -83,46 +101,12 @@ export default function OrderMedicine() {
     loading? 
     <ScrollView style={{ flex: 1 }}>
       <View style={{ flex: 1 }}>
-        <View style={{ marginTop: 50 }}>
-          <Text style={{ color: 'black', fontSize: 20 }}>
-            Process of medicine
-          </Text>
-        </View>
-        <View
-          style={{
-            flex: 1,
-            flexDirection: 'row',
-            marginTop: 20,
-            marginLeft: 30,
-          }}>
-          <View style={{ flex: 1, flexDirection: 'column' }}>
-            <Feather name="upload" size={20} color="skyblue" width="33" />
-            <Text>upload </Text>
-          </View>
-          <Divider />
-          <View style={{ flex: 1, flexDirection: 'column' }}>
-            <MaterialIcons
-              name="verified"
-              size={20}
-              color="skyblue"
-              width="33"
-            />
-            <Text>Admin will verify order </Text>
-          </View>
-          <Divider />
-          <View style={{ flex: 1, flexDirection: 'column' }}>
-            <Feather name="plus-square" size={20} color="skyblue" width="33" />
-            <Text>Get medicine at door step </Text>
-          </View>
-          <Divider />
-        </View>
         <View
           style={{
             flex: 2,
-            backgroundColor: 'skyblue',
             alignItems: 'center',
             justifyContent: 'center',
-            borderRadius: 20,
+            borderRadius: 10,
             width: '50%',
             marginHorizontal: 80,
             marginTop: 20,
@@ -136,6 +120,8 @@ export default function OrderMedicine() {
         <View style={{ paddingTop: 2, marginHorizontal: 50 }}>
           <Text>Description</Text>
           <TextInput
+          value={desciption}
+          onChangeText={(text)=>setdesciption(text)}
             placeholder="write Description"
             style={{ borderWidth: 2, width: '100%', height: 100 }}></TextInput>
         </View>
@@ -146,7 +132,7 @@ export default function OrderMedicine() {
             width: '40%',
             height: 50,
             alignItems: 'center',
-            backgroundColor: '#0000cc',
+            backgroundColor: 'skyblue',
             margin: 70,
             alignSelf: 'center',
           }}>

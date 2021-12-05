@@ -17,10 +17,18 @@ import React, { useEffect, useState } from 'react';
 
 import { Divider } from 'react-native-paper';
 
+import AsyncStorage from "@react-native-async-storage/async-storage";
 export default function OrderMedicine() {
   const [image, setImage] = useState(null);
-  const [loading, setloading] = useState(true)
-  const handleupload = () => {
+  const [loading, setloading] = useState(true);
+  const[desciption,setdesciption]=useState('');
+  const[address,setaddress]=useState('');
+
+  useEffect(() => {
+    console.log(desciption)
+  }, [desciption]);
+
+  const handleupload = async() => {
 
     setloading(false)
     var photo = {
@@ -28,15 +36,21 @@ export default function OrderMedicine() {
       type: 'image/jpeg',
       name: 'photo.jpg',
     };
+    var data = await AsyncStorage.getItem("data");
+    var token = await AsyncStorage.getItem("Token");
+    const d = JSON.parse(data);
+    id = d.user._id;
 
     //use formdata
     var formData = new FormData();
     //append created photo{} to formdata
     formData.append('filesent', photo);
 
-    formData.append('buyer_id', '60bf5057874ad732e888afa1');
-    //data.append("description", "2 panadol");
-    fetch('http://10.113.59.68:3000/patient/OrderMedicine', {
+    formData.append('buyer_id', id);
+    formData.append("description", desciption);
+    formData.append("address", address);
+    
+    fetch('http://192.168.18.48:3000/patient/OrderMedicine', {
       method: 'post',
       body: formData,
     })
@@ -136,7 +150,17 @@ export default function OrderMedicine() {
         <View style={{ paddingTop: 2, marginHorizontal: 50 }}>
           <Text>Description</Text>
           <TextInput
+          value={desciption}
+          onChangeText={(text)=>setdesciption(text)}
             placeholder="write Description"
+            style={{ borderWidth: 2, width: '100%', height: 100 }}></TextInput>
+        </View>
+        <View style={{ paddingTop: 2, marginHorizontal: 50 }}>
+          <Text>Address</Text>
+          <TextInput
+          value={desciption}
+          onChangeText={(text)=>setaddress(text)}
+            placeholder="Post Address"
             style={{ borderWidth: 2, width: '100%', height: 100 }}></TextInput>
         </View>
         <View

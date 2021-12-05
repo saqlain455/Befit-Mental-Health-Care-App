@@ -50,13 +50,14 @@ export const DoctorProfile = ({ navigation, route }) => {
           <Text style={{ fontSize: 20 }}>{getitem.name}</Text>
         </View>
         <View style={{ flex: 2 }}>
-          <Card>
-            <TouchableOpacity>
+          
+          {/* <Card>
+            <TouchableOpacity >
               <View style={{ alignItems: 'center' }}>
                 <MaterialIcons name="video-call" size={50} color="blue" />
               </View>
             </TouchableOpacity>
-          </Card>
+          </Card> */}
 
           <View style={{ flex: 1, margin: 20 }}>
             <Button mode="contained" onPress={() => navigation.navigate('AppointmentDate',{id:route.params.item._id})}>

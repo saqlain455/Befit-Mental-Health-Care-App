@@ -24,11 +24,13 @@ export const Report=(props)=> {
     "insomnia": 0,
     "sadness": 0,
   });
+
+
   const [isloading,setloading]=React.useState(true);
   useEffect(() => {
     console.log("my props")
-    console.log(props.route.params.Cresult)
-   setResult(props.route.params.Cresult)
+    console.log(props.route.params.item)
+   setResult(props.route.params.item.reportData)
   }, [])
 
   useEffect(() => {

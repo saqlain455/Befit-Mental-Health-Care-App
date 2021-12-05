@@ -1,5 +1,5 @@
 import * as React from "react";
-
+//New 
 import {
   ActivityIndicator,
   Button,
@@ -28,6 +28,9 @@ export const LoadingScreen = (props) => {
     const DoctorToken = await AsyncStorage.getItem("DoctorToken");
     const PatientToken = await AsyncStorage.getItem("PatientToken");
 
+    // const token = true
+    // const DoctorToken = false
+    // const PatientToken =true
     // console.log(JSON.parse(jsonValue))
 
     if (token) {
