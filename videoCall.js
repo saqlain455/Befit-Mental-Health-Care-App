@@ -76,7 +76,7 @@ const VideoCall = (props) => {
         </View>
         <View style={{flex: 1, backgroundColor: 'black'}}>
           <ScrollView horizontal style={{padding: 10}}>
-            {/* <>
+            <>
               {streams.length > 0 ? (
                 <>
                   {streams.map((stream, index) => (
@@ -98,7 +98,7 @@ const VideoCall = (props) => {
                   ))}
                 </>
               ) : null}
-            </> */}
+            </>
 
             <>
               {remoteStreams ? (

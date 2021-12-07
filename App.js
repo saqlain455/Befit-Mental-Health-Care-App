@@ -25,13 +25,14 @@ const Stack = createStackNavigator();
 // const [isloading,setloading]=useState(false)
 export const LoadingScreen = (props) => {
   const detectLogin = async () => {
-    // const token = await AsyncStorage.getItem("Token");
-    // const DoctorToken = await AsyncStorage.getItem("DoctorToken");
-    // const PatientToken = await AsyncStorage.getItem("PatientToken");
+    const token = await AsyncStorage.getItem("Token");
+    const DoctorToken = await AsyncStorage.getItem("DoctorToken");
+    const PatientToken = await AsyncStorage.getItem("PatientToken");
 
-    const token = true
-    const DoctorToken = false
-    const PatientToken =true
+    // const token = true
+    // const DoctorToken = false
+    // const PatientToken =true
+    
     // console.log(JSON.parse(jsonValue))
 
     if (token) {

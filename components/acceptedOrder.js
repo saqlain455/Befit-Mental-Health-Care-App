@@ -60,7 +60,7 @@ import { RectButton } from "react-native-gesture-handler";
      };
  
      fetch(
-       "http://192.168.18.48:3000/patient/ViewOrder/" + id,
+       "http://10.113.49.222:3000/patient/ViewOrder/" + id,
        requestOptions
      )
        .then((response) => response.json())

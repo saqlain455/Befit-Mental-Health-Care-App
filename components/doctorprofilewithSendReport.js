@@ -20,7 +20,9 @@ import {
   
   import { AppointmentDate } from './appointmentdate'
   import { MaterialIcons } from '@expo/vector-icons';
-  
+  import VideoCall from "../videoCall";
+
+
  const DoctorprofilewithSendReport = ({ navigation, route }) => {
   
     const [getitem, setitem] = React.useState([]);
@@ -51,7 +53,7 @@ import {
           </View>
           <View style={{ flex: 2 }}>
             <Card>
-              <TouchableOpacity>
+              <TouchableOpacity onPress={()=>navigation.navigate('VideoCall')}>
                 <View style={{ alignItems: 'center' }}>
                   <MaterialIcons name="video-call" size={50} color="blue" />
                 </View>

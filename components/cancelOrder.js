@@ -48,7 +48,7 @@ function CancelOrder({ navigation }) {
       redirect: "follow",
     };
 
-    fetch("http://192.168.18.48:3000/patient/ViewOrder/" + id, requestOptions)
+    fetch("http://10.113.49.222:3000/patient/ViewOrder/" + id, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         console.log("HI bro your order data is there");

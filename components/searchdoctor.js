@@ -42,7 +42,7 @@ export const SearchDoctor = ({ navigation }) => {
     };
 
     fetch(
-      "http://192.168.18.48:3000/patient/doctors/" + searchQuery,
+      "http://10.113.49.222:3000/patient/doctors/" + searchQuery,
       requestOptions
     )
       .then((response) => response.json())
@@ -73,7 +73,7 @@ export const SearchDoctor = ({ navigation }) => {
           headers: myHeaders
         };
 
-        fetch("http://192.168.18.48:3000/patient/doctors", requestOptions)
+        fetch("http://10.113.49.222:3000/patient/doctors", requestOptions)
           .then(response => response.json())
           .then(result => {
             setlist(result)
@@ -124,8 +124,8 @@ export const SearchDoctor = ({ navigation }) => {
 
   return (
     isloading ? (
-      <View style={{ flex: 1, padding: 20 }}>
-        <ActivityIndicator size="large" color="blue" />
+      <View style={{ flex: 1, padding: 20,display:'flex',justifyContent:'center',alignContent:'center' }}>
+        <ActivityIndicator size={300} color="skyblue" />
         <Text>Loading Data ...</Text>
       </View>
     )

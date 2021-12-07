@@ -32,16 +32,16 @@ export const VoiceScreen = ({ navigation }) => {
       numberOfChannels: 2,
       bitRate: 128000,
     },
-    ios: {
-      extension: '.wav',
-      audioQuality: Audio.RECORDING_OPTION_IOS_AUDIO_QUALITY_MAX,
-      sampleRate: 44100,
-      numberOfChannels: 2,
-      bitRate: 128000,
-      linearPCMBitDepth: 16,
-      linearPCMIsBigEndian: false,
-      linearPCMIsFloat: false,
-    },
+    // ios: {
+    //   extension: '.wav',
+    //   audioQuality: Audio.RECORDING_OPTION_IOS_AUDIO_QUALITY_MAX,
+    //   sampleRate: 44100,
+    //   numberOfChannels: 2,
+    //   bitRate: 128000,
+    //   linearPCMBitDepth: 16,
+    //   linearPCMIsBigEndian: false,
+    //   linearPCMIsFloat: false,
+    // },
   };
 
   // React.useEffect(() => {
@@ -56,7 +56,7 @@ export const VoiceScreen = ({ navigation }) => {
     // const t = resultTranscript
     var t= re
     formData.append('text', t);
-    fetch('http://192.168.18.48:3000/patient/predictText/' + t, {
+    fetch('http://10.113.49.222:3000/patient/predictText/' + t, {
       method: 'GET',
     })
       .then((response) => response.json())
@@ -79,7 +79,7 @@ export const VoiceScreen = ({ navigation }) => {
         redirect: 'follow'
       };
 
-      fetch("http://192.168.18.48:3000/patient/transcript/" + Voiceid, requestOptions)
+      fetch("http://10.113.49.222:3000/patient/transcript/" + Voiceid, requestOptions)
         .then(response => response.json())
         .then(async(result) => {
           console.log(result.text)
@@ -102,7 +102,7 @@ export const VoiceScreen = ({ navigation }) => {
     var formData = new FormData();
     //append created photo{} to formdata
     formData.append('filesent', photo);
-    await fetch('http://192.168.18.48:3000/patient/sendVoice', {
+    await fetch('http://10.113.49.222:3000/patient/sendVoice', {
       method: 'post',
       body: formData,
     })
@@ -137,22 +137,22 @@ export const VoiceScreen = ({ navigation }) => {
 
 
 
-  useEffect(()=>{
-    getPermissions()
-  },[])
+  // useEffect(()=>{
+  //   getPermissions()
+  // },[])
 
-  const getPermissions = async () => {
-    try {
-      console.log('Requesting permissions..');
+  // const getPermissions = async () => {
+  //   try {
+  //     console.log('Requesting permissions..');
 
-      const AudioPerm = await Audio.requestPermissionsAsync();
-      if (AudioPerm.status === 'granted') {
-      console.log('Audio Permission Granted');
-      }
-    } catch (err) {
-     console.log('Failed to get permissions', err);
-    }
-  };
+  //     const AudioPerm = await Audio.requestPermissionsAsync();
+  //     if (AudioPerm.status === 'granted') {
+  //     console.log('Audio Permission Granted');
+  //     }
+  //   } catch (err) {
+  //    console.log('Failed to get permissions', err);
+  //   }
+  // };
 
   async function startRecording() {
     try {

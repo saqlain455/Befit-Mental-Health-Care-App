@@ -42,8 +42,7 @@ export const DoctorProfile = ({ navigation, route }) => {
         <View style={styles.SubContainer}>
           <Image
             source={{
-              uri:
-                'https://th.bing.com/th/id/OIP.c-LsJtQ-CPkgOqk3NQQ3tQHaJQ?pid=ImgDet&rs=1',
+              uri:'https://th.bing.com/th/id/OIP.c-LsJtQ-CPkgOqk3NQQ3tQHaJQ?pid=ImgDet&rs=1',
             }}
             style={{ width: 150, height: 150, borderRadius: 150 / 2 }}
           />

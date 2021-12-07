@@ -10,7 +10,7 @@ import Peer from 'react-native-peerjs';
 export const API_URI=`http://192.168.100.23:5000/`
 
 //socket config
-export const socket=IO("http://192.168.100.23:5000",{
+export const socket=IO("http://10.113.49.222:5000",{
     forceNew:true
 })
 
@@ -19,7 +19,7 @@ export const socket=IO("http://192.168.100.23:5000",{
 
 export const joinRoom=(stream)=> async(dispatch)=>{
     const peerServer=new Peer(undefined,{
-        host:"192.168.100.23",
+        host:"10.113.49.222",
         secure:false,
         path:'/mypeer',
         port:'5000'

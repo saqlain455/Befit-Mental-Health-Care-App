@@ -46,7 +46,7 @@ const Blog = ({navigation}) => {
           headers: myHeaders
         };
 
-        fetch("http://192.168.18.48:3000/doctor/blog/", requestOptions)
+        fetch("http://10.113.49.222:3000/doctor/blog/", requestOptions)
           .then(response => response.json())
           .then(result => {
             setloading(true)

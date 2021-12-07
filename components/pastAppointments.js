@@ -52,7 +52,7 @@ function PastAppointments({ navigation }) {
     };
 
     fetch(
-      "http://192.168.18.48:3000/patient/ViewAppointment/" + id,
+      "http://10.113.49.222:3000/patient/ViewAppointment/" + id,
       requestOptions
     )
       .then((response) => response.json())

@@ -21,19 +21,22 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 function TextScreen({navigation}) {
   const [getText, setText] = useState('');
+  const [loading,setlaoding]=useState(false)
   const getAnalysis=()=>{
     //use formdata
+    setlaoding(true)
     var formData = new FormData();
     console.log(getText)
     const t=getText
     formData.append('text', t);
-    fetch('http://192.168.18.48:3000/patient/predictText/'+t, {
+    fetch('http://10.113.49.222:3000/patient/predictText/'+t, {
       method: 'GET',
     })
       .then((response) => response.json())
       .then((result) =>{
          console.log(result)
         //  Alert.alert(result)
+        setlaoding(false)
          navigation.replace('Report',{Cresult:result})
         })
       .catch((error) => console.log('error', error));
@@ -54,7 +57,7 @@ function TextScreen({navigation}) {
       <View style={styles.MainContainer}>
         <ScrollView style={{ height: 500 }}>
           <Text style={{ fontSize: 20, margin: 10 }}>
-            Write your Mental Health Problem
+            what is your feeling?
           </Text>
           <TextInput
             style={styles.TextInputStyleClass}
@@ -66,21 +69,23 @@ function TextScreen({navigation}) {
             onSubmitEditing={Keyboard.dismiss}
             onChangeText={(UserName) => setText(UserName)}
           />
-          <TouchableOpacity onPress={getAnalysis}>
-            <View
-              style={{
-                width: '50%',
-                height: 40,
-                backgroundColor: 'blue',
-                alignSelf: 'center',
-                marginTop: 30,
-                borderRadius: 20,
-              }}>
-              <Text style={{ textAlign: 'center', fontSize: 20, paddingTop: 5, color: 'white' }}>
-                Analysis
-              </Text>
-            </View>
-          </TouchableOpacity>
+{
+    loading?null:
+    <TouchableOpacity onPress={getAnalysis}>
+          <View
+            style={{
+              width: '50%',
+              height: 40,
+              backgroundColor: 'blue',
+              alignSelf: 'center',
+              marginTop: 30,
+              borderRadius: 20,
+            }}>
+            <Text style={{ textAlign: 'center', fontSize: 20, paddingTop: 5, color: 'white' }}>
+              Analysis
+            </Text>
+          </View>
+        </TouchableOpacity>}
         </ScrollView>
       </View>
     </ScrollView>
