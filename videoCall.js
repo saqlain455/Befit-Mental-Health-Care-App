@@ -47,6 +47,7 @@ const VideoCall = (props) => {
           //   console.log(stream);
         })
         .catch((error) => {
+          console.log(error)
           // Log error
         });
     });
@@ -55,9 +56,9 @@ const VideoCall = (props) => {
     console.log("Other stream")
     console.log(streams)
     console.log(props.video.myStream)
-    console.log("end stream")
+    console.log("end stream") 
   return (
-    <View style={{flex: 1, justifyContent: 'flex-start', padding: 10}}>
+    <View style={{ display:'flex',flex: 1, justifyContent: 'flex-start', padding: 10}}>
         <View
           style={{
             flex: 1,

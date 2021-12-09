@@ -53,7 +53,7 @@ export class Signup extends React.Component {
       redirect: 'follow'
     };
 
-    return fetch("http://10.113.49.222:3000/users/signup", requestOptions)
+    return fetch("http://192.168.100.23:3000/users/signup", requestOptions)
       .then((response) => response.json())
       .then((result) => {
         console.log(result);

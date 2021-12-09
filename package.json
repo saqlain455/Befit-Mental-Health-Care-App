@@ -12,6 +12,7 @@
     "@react-native-async-storage/async-storage": "^1.13.0",
     "@react-native-community/datetimepicker": "3.5.2",
     "@react-native-community/masked-view": "0.1.10",
+    "@react-native-firebase/app": "^13.1.0",
     "@react-navigation/drawer": "^5.12.7",
     "@react-navigation/elements": "1.0.0-next.11",
     "@react-navigation/material-top-tabs": "6.0.2",
@@ -52,7 +53,8 @@
     "react-redux": "^7.2.6",
     "redux": "^4.1.2",
     "redux-thunk": "^2.4.1",
-    "socket.io-client": "^4.4.0"
+    "socket.io-client": "^4.4.0",
+    "tipsi-stripe": "^9.2.0"
   },
   "devDependencies": {
     "@babel/core": "^7.15.0"

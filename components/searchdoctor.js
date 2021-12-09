@@ -42,7 +42,7 @@ export const SearchDoctor = ({ navigation }) => {
     };
 
     fetch(
-      "http://10.113.49.222:3000/patient/doctors/" + searchQuery,
+      "http://192.168.100.23:3000/patient/doctors/" + searchQuery,
       requestOptions
     )
       .then((response) => response.json())
@@ -73,7 +73,7 @@ export const SearchDoctor = ({ navigation }) => {
           headers: myHeaders
         };
 
-        fetch("http://10.113.49.222:3000/patient/doctors", requestOptions)
+        fetch("http://192.168.100.23:3000/patient/doctors", requestOptions)
           .then(response => response.json())
           .then(result => {
             setlist(result)

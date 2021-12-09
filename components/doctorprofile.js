@@ -42,7 +42,7 @@ export const DoctorProfile = ({ navigation, route }) => {
         <View style={styles.SubContainer}>
           <Image
             source={{
-              uri:'https://th.bing.com/th/id/OIP.c-LsJtQ-CPkgOqk3NQQ3tQHaJQ?pid=ImgDet&rs=1',
+              uri:'https://img.freepik.com/free-vector/doctor-character-background_1270-84.jpg?size=338&ext=jpg',
             }}
             style={{ width: 150, height: 150, borderRadius: 150 / 2 }}
           />
@@ -59,7 +59,8 @@ export const DoctorProfile = ({ navigation, route }) => {
           </Card> */}
 
           <View style={{ flex: 1, margin: 20 }}>
-            <Button mode="contained" onPress={() => navigation.navigate('AppointmentDate',{id:route.params.item._id})}>
+
+            <Button mode="contained" onPress={() => navigation.navigate('Payment',{id:route.params.item._id})}>
               Book Video Consultation
             </Button>
           </View>
@@ -115,7 +116,7 @@ export const DoctorProfile = ({ navigation, route }) => {
               <Image
                 source={{
                   uri:
-                    'https://th.bing.com/th/id/OIP.c-LsJtQ-CPkgOqk3NQQ3tQHaJQ?pid=ImgDet&rs=1',
+                  'https://img.freepik.com/free-vector/doctor-character-background_1270-84.jpg?size=338&ext=jpg',
                 }}
                 style={{ width: 70, height: 70, borderRadius: 150 / 2 }}
               />

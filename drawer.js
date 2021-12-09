@@ -33,6 +33,7 @@ import DoctorprofilewithSendReport from './components/doctorprofilewithSendRepor
 import { Payment } from "./components/payment";
 // import pastAppointments from './Component/pastAppointments';
 import VideoCall from "./videoCall";
+import Rating from "./components/rating";
 
 const Drawer = createDrawerNavigator()
 const Stack = createStackNavigator()
@@ -151,7 +152,9 @@ export const AppointmentsHistory = () => {
       <Stack1.Screen name='ActiveAppointments' component={ActiveAppointments} />
       <Stack1.Screen name='AcceptedAppointments' component={AcceptedAppointments} />
       <Stack1.Screen name='PastAppointments' component={PastAppointments} />
-      <Stack1.Screen name='DoctorprofilewithSendReport' component={DoctorprofilewithSendReport} />
+      <Stack1.Screen name='Video-Enable' component={DoctorprofilewithSendReport} />
+      <Stack1.Screen name='VideoCall' component={VideoCall} />
+      <Stack1.Screen name='Rating' component={Rating} />
     </Stack1.Navigator>
   )
 }
@@ -249,7 +252,7 @@ export const MyDrawer = ({ navigation }) => {
         })}
         
       />
-                  <Drawer.Screen
+      {/* <Drawer.Screen
         name='VideoCall'
         component={VideoCall}
         options={({ navigation }) => ({
@@ -257,7 +260,7 @@ export const MyDrawer = ({ navigation }) => {
           headerTintColor: 'blue'
         })}
         
-      />
+      /> */}
       
       <Drawer.Screen
         name='Logout'

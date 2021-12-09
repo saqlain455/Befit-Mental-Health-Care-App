@@ -1,5 +1,5 @@
 apply plugin: "com.android.application"
-
+apply plugin: 'com.google.gms.google-services'
 import com.android.build.OutputFile
 
 /**
@@ -186,7 +186,11 @@ android {
 dependencies {
     implementation fileTree(dir: "libs", include: ["*.jar"])
    // implementationproject(':WebRTCModule')
+   implementation platform('com.google.firebase:firebase-bom:29.0.1')
+   implementation 'com.google.firebase:firebase-analytics'
+    implementation 'com.google.android.gms:play-services-location:18.0.0'
     compile project(':WebRTCModule')
+    implementation project(':tipsi-stripe')
     //noinspection GradleDynamicVersion
     implementation "com.facebook.react:react-native:+"  // From node_modules
     implementation "androidx.swiperefreshlayout:swiperefreshlayout:1.0.0"

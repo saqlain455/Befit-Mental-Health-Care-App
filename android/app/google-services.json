@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "709988764692",
+    "project_id": "mern-project-318806",
+    "storage_bucket": "mern-project-318806.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:709988764692:android:666d02e4470d685c69eb01",
+        "android_client_info": {
+          "package_name": "com.maliksaqlai.proj"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "709988764692-grcddpakba7bn0708n535jtnp18e7mc7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXAIqDAkS4Z9UKwH1HN_OVHyC4KVxT3XM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "709988764692-grcddpakba7bn0708n535jtnp18e7mc7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

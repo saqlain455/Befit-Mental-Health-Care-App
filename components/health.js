@@ -29,7 +29,7 @@ function TextScreen({navigation}) {
     console.log(getText)
     const t=getText
     formData.append('text', t);
-    fetch('http://10.113.49.222:3000/patient/predictText/'+t, {
+    fetch('http://192.168.100.23:3000/patient/predictText/'+t, {
       method: 'GET',
     })
       .then((response) => response.json())

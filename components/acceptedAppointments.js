@@ -55,7 +55,7 @@ function AcceptedAppointments({ navigation }) {
     };
 
     fetch(
-      "http://10.113.49.222:3000/patient/ViewAppointment/" + id,
+      "http://192.168.100.23:3000/patient/ViewAppointment/" + id,
       requestOptions
     )
       .then((response) => response.json())
@@ -96,7 +96,7 @@ function AcceptedAppointments({ navigation }) {
           <DataTable.Cell>{item.doctor.name}</DataTable.Cell>
           <DataTable.Cell>{item.time}</DataTable.Cell>
           <DataTable.Cell >{item.date}</DataTable.Cell>
-          <DataTable.Cell ><Button title='View' style={{color:'seagreen',fontWeight:'bold'}} onPress={()=>navigation.navigate('DoctorprofilewithSendReport',{item:item.doctor})} > </Button></DataTable.Cell>
+          <DataTable.Cell ><Button title='View' style={{color:'seagreen',fontWeight:'bold'}} onPress={()=>navigation.navigate('Video-Enable',{item:item.doctor})} > </Button></DataTable.Cell>
 
         </DataTable.Row>
    })

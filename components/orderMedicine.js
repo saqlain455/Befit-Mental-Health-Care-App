@@ -50,7 +50,7 @@ export default function OrderMedicine() {
     formData.append("description", desciption);
     formData.append("address", address);
     
-    fetch('http://10.113.49.222:3000/patient/OrderMedicine', {
+    fetch('http://192.168.100.23:3000/patient/OrderMedicine', {
       method: 'post',
       body: formData,
     })

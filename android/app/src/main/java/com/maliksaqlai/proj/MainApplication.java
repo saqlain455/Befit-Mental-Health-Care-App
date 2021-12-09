@@ -31,6 +31,8 @@ import java.util.Arrays;
 import java.util.List;
 import javax.annotation.Nullable;
 import com.oney.WebRTCModule.WebRTCModulePackage; 
+import com.gettipsi.stripe.StripeReactPackage;
+
 public class MainApplication extends Application implements ReactApplication {
   private final ReactModuleRegistryProvider mModuleRegistryProvider = new ReactModuleRegistryProvider(
     new BasePackageList().getPackageList()
@@ -41,11 +43,18 @@ public class MainApplication extends Application implements ReactApplication {
     public boolean getUseDeveloperSupport() {
       return BuildConfig.DEBUG;
     }
+   
+    public boolean canOverrideExistingModule() {  
+    return true; 
+}
 
     @Override
     protected List<ReactPackage> getPackages() {
       List<ReactPackage> packages = new PackageList(this).getPackages();
       packages.add(new ModuleRegistryAdapter(mModuleRegistryProvider));
+      // packages.add(new StripeReactPackage());
+
+
       return packages;
     }
 
