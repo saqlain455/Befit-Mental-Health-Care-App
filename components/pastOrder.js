@@ -52,7 +52,7 @@
      };
  
      fetch(
-       "http://192.168.100.23:3000/patient/ViewOrder/" + id,
+       "http://192.168.18.48:3000/patient/ViewOrder/" + id,
        requestOptions
      )
        .then((response) => response.json())

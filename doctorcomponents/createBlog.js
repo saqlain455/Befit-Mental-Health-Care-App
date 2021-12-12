@@ -48,7 +48,7 @@ export default function CreateBlog() {
     formData.append("title", title);
     formData.append("poster", id);
     console.log("this is form data",formData)
-    fetch("http://192.168.100.23:3000/doctor/addblog", {
+    fetch("http://192.168.18.48:3000/doctor/addblog", {
       method: "post",
       body: formData
     })

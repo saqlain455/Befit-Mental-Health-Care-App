@@ -120,7 +120,7 @@ const Payment = ({ navigation, route }) => {
     };
 
     return fetch(
-      "http://192.168.100.23:3000/patient/processPayment",
+      "http://192.168.18.48:3000/patient/processPayment",
       requestOptions
     )
       .then((response) => response.json())

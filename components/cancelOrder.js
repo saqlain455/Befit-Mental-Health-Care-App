@@ -48,7 +48,7 @@ function CancelOrder({ navigation }) {
       redirect: "follow",
     };
 
-    fetch("http://192.168.100.23:3000/patient/ViewOrder/" + id, requestOptions)
+    fetch("http://192.168.18.48:3000/patient/ViewOrder/" + id, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         console.log("HI bro your order data is there");
@@ -59,9 +59,7 @@ function CancelOrder({ navigation }) {
   };
 
   async function fiterApoinement() {
-    const ap = await appoinementdata.filter(
-      (item) => item.status === "canceled"
-    );
+    const ap = await appoinementdata.filter((item) => item.status === "canceled");
     setfilterAppointment(ap);
   }
 
@@ -74,7 +72,6 @@ function CancelOrder({ navigation }) {
   }, []);
 
   return (
-    <View>
       <View style={styles.container}>
         <DataTable>
           <DataTable.Header>
@@ -88,10 +85,8 @@ function CancelOrder({ navigation }) {
               <DataTable.Row key={index} style={styles.row}>
                 <DataTable.Cell>{item._id}</DataTable.Cell>
                 <DataTable.Cell>{item.date}</DataTable.Cell>
-
                 <DataTable.Cell>
                   <Text style={{ color: "red", fontWeight: "bold" }}>
-                    {" "}
                     Canceled
                   </Text>
                 </DataTable.Cell>
@@ -100,7 +95,6 @@ function CancelOrder({ navigation }) {
           })}
         </DataTable>
       </View>
-    </View>
   );
 }
 

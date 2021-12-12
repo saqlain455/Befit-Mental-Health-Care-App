@@ -61,7 +61,7 @@ const shareit=()=>{
     };
 
     fetch(
-      "http://192.168.100.23:3000/patient/ViewAppointment/" + id,
+      "http://192.168.18.48:3000/patient/ViewAppointment/" + id,
       requestOptions
     )
       .then((response) => response.json())

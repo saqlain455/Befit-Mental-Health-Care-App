@@ -65,7 +65,7 @@ export default class Rating extends Component {
     };
 
     return fetch(
-      "http://192.168.100.23:3000/patient/createRating",
+      "http://192.168.18.48:3000/patient/createRating",
       requestOptions
     )
       .then((res) => res.json())

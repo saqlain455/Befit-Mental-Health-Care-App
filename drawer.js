@@ -34,6 +34,7 @@ import { Payment } from "./components/payment";
 // import pastAppointments from './Component/pastAppointments';
 import VideoCall from "./videoCall";
 import Rating from "./components/rating";
+import AudioRecor from "./audiio";
 
 const Drawer = createDrawerNavigator()
 const Stack = createStackNavigator()
@@ -243,7 +244,7 @@ export const MyDrawer = ({ navigation }) => {
           headerTintColor: 'blue'
         })}
       />
-            <Drawer.Screen
+            {/* <Drawer.Screen
         name='Payment'
         component={Payment}
         options={({ navigation }) => ({
@@ -251,7 +252,7 @@ export const MyDrawer = ({ navigation }) => {
           headerTintColor: 'blue'
         })}
         
-      />
+      /> */}
       {/* <Drawer.Screen
         name='VideoCall'
         component={VideoCall}
@@ -261,6 +262,16 @@ export const MyDrawer = ({ navigation }) => {
         })}
         
       /> */}
+            <Drawer.Screen
+        name='Audio'
+        component={AudioRecor}
+        options={({ navigation }) => ({
+          drawerLabel: 'AudioRecord',
+          headerTintColor: 'blue'
+        })}
+        
+      />
+      
       
       <Drawer.Screen
         name='Logout'

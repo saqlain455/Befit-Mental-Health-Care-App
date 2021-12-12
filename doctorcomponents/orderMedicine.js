@@ -36,7 +36,7 @@ export default function OrderMedicine() {
 
     formData.append('buyer_id', '60bf5057874ad732e888afa1');
     //data.append("description", "2 panadol");
-    fetch('http://192.168.100.23:3000/patient/OrderMedicine', {
+    fetch('http://192.168.18.48:3000/patient/OrderMedicine', {
       method: 'post',
       body: formData,
     })

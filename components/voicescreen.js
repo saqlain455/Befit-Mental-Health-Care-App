@@ -1,5 +1,5 @@
 import * as FileSystem from 'expo-file-system';
-import React,{useEffect} from 'react';
+import React,{useEffect,useState} from 'react';
 
 import { ActivityIndicator, Alert, Button, Dimensions, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import {
@@ -10,18 +10,34 @@ import {
   ProgressChart,
   StackedBarChart,
 } from 'react-native-chart-kit';
+import AudioRecorderPlayer, {
+  AVEncoderAudioQualityIOSType,
+  AVEncodingOption,
+  AudioEncoderAndroidType,
+  AudioSet,
+  AudioSourceAndroidType,
+ }  from 'react-native-audio-recorder-player';
+ const audioRecorderPlayer = new AudioRecorderPlayer();
 
 import { Audio } from 'expo-av';
 import { MaterialIcons } from '@expo/vector-icons';
 import axios from 'axios';
+import { PermissionsAndroid } from 'react-native';
+
 
 export const VoiceScreen = ({ navigation }) => {
   const [sound, setSound] = React.useState();
   const [RecordedURI, SetRecordedURI] = React.useState('');
-  const [recording, setRecording] = React.useState();
+  const [recording, setRecording] = React.useState(false);
   const [Voiceid, setVoiceid] = React.useState('');
   const [resultTranscript, setresultTranscript] = React.useState();
   const [isloading, setloading] = React.useState(true);
+  const [audioInfo,setaudioInfo]=useState({    
+    currentPositionSec: undefined,
+    currentDurationSec: undefined,
+    playTime:undefined,
+    duration: undefined,
+})
   const RECORDING_OPTIONS_PRESET_HIGH_QUALITY = {
     isMeteringEnabled: true,
     android: {
@@ -32,16 +48,16 @@ export const VoiceScreen = ({ navigation }) => {
       numberOfChannels: 2,
       bitRate: 128000,
     },
-    // ios: {
-    //   extension: '.wav',
-    //   audioQuality: Audio.RECORDING_OPTION_IOS_AUDIO_QUALITY_MAX,
-    //   sampleRate: 44100,
-    //   numberOfChannels: 2,
-    //   bitRate: 128000,
-    //   linearPCMBitDepth: 16,
-    //   linearPCMIsBigEndian: false,
-    //   linearPCMIsFloat: false,
-    // },
+    ios: {
+      extension: '.wav',
+      audioQuality: Audio.RECORDING_OPTION_IOS_AUDIO_QUALITY_MAX,
+      sampleRate: 44100,
+      numberOfChannels: 2,
+      bitRate: 128000,
+      linearPCMBitDepth: 16,
+      linearPCMIsBigEndian: false,
+      linearPCMIsFloat: false,
+    },
   };
 
   // React.useEffect(() => {
@@ -56,7 +72,7 @@ export const VoiceScreen = ({ navigation }) => {
     // const t = resultTranscript
     var t= re
     formData.append('text', t);
-    fetch('http://192.168.100.23:3000/patient/predictText/' + t, {
+    fetch('http://192.168.18.48:3000/patient/predictText/' + t, {
       method: 'GET',
     })
       .then((response) => response.json())
@@ -79,7 +95,7 @@ export const VoiceScreen = ({ navigation }) => {
         redirect: 'follow'
       };
 
-      fetch("http://192.168.100.23:3000/patient/transcript/" + Voiceid, requestOptions)
+      fetch("http://192.168.18.48:3000/patient/transcript/" + Voiceid, requestOptions)
         .then(response => response.json())
         .then(async(result) => {
           console.log(result.text)
@@ -93,8 +109,8 @@ export const VoiceScreen = ({ navigation }) => {
   const getAnalysis = async () => {
     var photo = {
       uri: RecordedURI,
-      type: 'audio/wav',
-      name: 'audio.wav',
+      type: 'audio/mp4',
+      name: 'abc.mp4',
     };
 
     //use formdata
@@ -102,7 +118,7 @@ export const VoiceScreen = ({ navigation }) => {
     var formData = new FormData();
     //append created photo{} to formdata
     formData.append('filesent', photo);
-    await fetch('http://192.168.100.23:3000/patient/sendVoice', {
+    await fetch('http://192.168.18.48:3000/patient/sendVoice', {
       method: 'post',
       body: formData,
     })
@@ -154,10 +170,103 @@ export const VoiceScreen = ({ navigation }) => {
   //   }
   // };
 
+  const onStartRecord = async () => {
+    setRecording(true);
+
+    const result = await audioRecorderPlayer.startRecorder();
+    audioRecorderPlayer.addRecordBackListener((e) => {
+      setaudioInfo({
+        recordSecs: e.currentPosition,
+        recordTime: audioRecorderPlayer.mmssss(
+          Math.floor(e.currentPosition),
+        ),
+      });
+      return;
+    });
+    console.log(result);
+  };
+  
+  const onStopRecord = async () => {
+    setRecording(false);
+    const result = await audioRecorderPlayer.stopRecorder();
+    audioRecorderPlayer.removeRecordBackListener();
+    setaudioInfo({
+      recordSecs: 0,
+    });
+    const info = await FileSystem.getInfoAsync(result);
+    console.log(`FILE INFO: ${JSON.stringify(info)}`);
+    console.log('Recording stopped and stored at', info);
+    console.log(result);
+    SetRecordedURI(info.uri);
+  };
+  
+
+  
+  const onStartPlay = async () => {
+
+    const msg = await audioRecorderPlayer.startPlayer();
+    await audioRecorderPlayer.setVolume(1.0)
+    console.log(msg);
+    audioRecorderPlayer.addPlayBackListener((e) => {
+      setaudioInfo({
+        currentPositionSec: e.currentPosition,
+        currentDurationSec: e.duration,
+        playTime: audioRecorderPlayer.mmssss(Math.floor(e.currentPosition)),
+        duration: audioRecorderPlayer.mmssss(Math.floor(e.duration)),
+      });
+      return;
+    });
+  };
+
+  const onPausePlay = async () => {
+    await audioRecorderPlayer.pausePlayer();
+  };
+  
+  const onStopPlay = async () => {
+    console.log('onStopPlay');
+    audioRecorderPlayer.stopPlayer();
+    audioRecorderPlayer.removePlayBackListener();
+  };
+
+
+  useEffect(()=>{
+    permiss()
+  },[])
+
+   const permiss=async()=>{
+    if (Platform.OS === 'android') {
+      try {
+        const grants = await PermissionsAndroid.requestMultiple([
+          PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+          PermissionsAndroid.PERMISSIONS.READ_EXTERNAL_STORAGE,
+          PermissionsAndroid.PERMISSIONS.RECORD_AUDIO,
+        ])
+    
+        console.log('write external stroage', grants);
+    
+        if (
+          grants['android.permission.WRITE_EXTERNAL_STORAGE'] ===
+            PermissionsAndroid.RESULTS.GRANTED &&
+          grants['android.permission.READ_EXTERNAL_STORAGE'] ===
+            PermissionsAndroid.RESULTS.GRANTED &&
+          grants['android.permission.RECORD_AUDIO'] ===
+            PermissionsAndroid.RESULTS.GRANTED
+        ) {
+          console.log('Permissions granted');
+        } else {
+          console.log('All required permissions not granted');
+          return;
+        }
+      } catch (err) {
+        console.warn(err);
+        return;
+      }
+    }
+  }
+
   async function startRecording() {
     try {
       console.log('Requesting permissions..');
-      await Audio.requestPermissionsAsync();
       await Audio.setAudioModeAsync({
         allowsRecordingIOS: true,
         playsInSilentModeIOS: true,
@@ -205,13 +314,18 @@ export const VoiceScreen = ({ navigation }) => {
 
     <View style={styles.container}>
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-        <TouchableOpacity onPress={recording ? stopRecording : startRecording}>
+        <TouchableOpacity onPress={recording ? onStopRecord:onStartRecord}>
           <MaterialIcons name={recording ? "stop" : "keyboard-voice"} size={80} color="blue" />
         </TouchableOpacity>
         <Button
           title={recording ? 'Stop Recording' : 'Start Recording'}
         // onPress={recording ? stopRecording : startRecording}
         />
+                <Button
+          title='Start ply'
+        onPress={onStartPlay}
+        />
+        
       </View>
       <Button title="getAnalysis" onPress={getAnalysis} />
       <Button title="gettranscription" onPress={gettranscription} />

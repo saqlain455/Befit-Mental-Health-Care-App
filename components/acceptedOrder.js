@@ -47,7 +47,7 @@ function AcceptedOrder({ navigation }) {
       redirect: "follow",
     };
 
-    fetch("http://192.168.100.23:3000/patient/cancelOrder/" + id, requestOptions)
+    fetch("http://192.168.18.48:3000/patient/cancelOrder/" + id, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         console.log("HI bro your Order data is updated");
@@ -77,7 +77,7 @@ function AcceptedOrder({ navigation }) {
       redirect: "follow",
     };
 
-    fetch("http://192.168.100.23:3000/patient/ViewOrder/" + id, requestOptions)
+    fetch("http://192.168.18.48:3000/patient/ViewOrder/" + id, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         setdata(result);

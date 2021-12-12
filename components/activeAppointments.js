@@ -52,7 +52,7 @@ function ActiveAppointments({ navigation }) {
     };
 
     fetch(
-      "http://192.168.100.23:3000/patient/cancelAppointment/" + id,
+      "http://192.168.18.48:3000/patient/cancelAppointment/" + id,
       requestOptions
     )
       .then((response) => response.json())
@@ -86,7 +86,7 @@ function ActiveAppointments({ navigation }) {
     };
 
     fetch(
-      "http://192.168.100.23:3000/patient/ViewAppointment/" + id,
+      "http://192.168.18.48:3000/patient/ViewAppointment/" + id,
       requestOptions
     )
       .then((response) => response.json())

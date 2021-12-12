@@ -47,7 +47,7 @@ export const DoctorReg = (props) => {
       redirect: "follow"
     };
 
-    fetch("http://192.168.100.23:3000/users/Requestdoctor/", requestOptions)
+    fetch("http://192.168.18.48:3000/users/Requestdoctor/", requestOptions)
       .then((response) => response.text())
       .then((result) => {
         console.log("HI bro doctor has saved in db");

@@ -119,7 +119,7 @@ export const Profile = (props) => {
     };
 
     fetch(
-      "http://192.168.100.23:3000/patient/updateProfile/" + id,
+      "http://192.168.18.48:3000/patient/updateProfile/" + id,
       requestOptions
     )
       .then((response) => response.text())
@@ -153,7 +153,7 @@ export const Profile = (props) => {
       };
 
       fetch(
-        "http://192.168.100.23:3000/patient/getownData/" + d.user._id,
+        "http://192.168.18.48:3000/patient/getownData/" + d.user._id,
         requestOptions
       )
         .then((response) => response.json())
@@ -204,7 +204,7 @@ export const Profile = (props) => {
   //   };
 
   //   fetch(
-  //     "http://192.168.100.23:3000/patient/Order/60bf5057874ad732e888afa1",
+  //     "http://192.168.18.48:3000/patient/Order/60bf5057874ad732e888afa1",
   //     requestOptions
   //   )
   //     .then((response) => response.json())
@@ -266,7 +266,7 @@ export const Profile = (props) => {
     //append created photo{} to formdata
     formData.append("filesent", photo);
     //data.append("description", "2 panadol");
-    fetch("http://192.168.100.23:3000/patient/updateProfilePic/" + d.user._id, {
+    fetch("http://192.168.18.48:3000/patient/updateProfilePic/" + d.user._id, {
       method: "put",
       body: formData
     })

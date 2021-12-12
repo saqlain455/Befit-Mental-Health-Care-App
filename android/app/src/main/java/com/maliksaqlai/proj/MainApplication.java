@@ -32,7 +32,7 @@ import java.util.List;
 import javax.annotation.Nullable;
 import com.oney.WebRTCModule.WebRTCModulePackage; 
 import com.gettipsi.stripe.StripeReactPackage;
-
+import com.dooboolab.audiorecorderplayer.RNAudioRecorderPlayerPackage;
 public class MainApplication extends Application implements ReactApplication {
   private final ReactModuleRegistryProvider mModuleRegistryProvider = new ReactModuleRegistryProvider(
     new BasePackageList().getPackageList()
@@ -53,6 +53,7 @@ public class MainApplication extends Application implements ReactApplication {
       List<ReactPackage> packages = new PackageList(this).getPackages();
       packages.add(new ModuleRegistryAdapter(mModuleRegistryProvider));
       // packages.add(new StripeReactPackage());
+     // packages.add(new RNAudioRecorderPlayerPackage());
 
 
       return packages;
