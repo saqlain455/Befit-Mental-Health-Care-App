@@ -83,13 +83,15 @@ export default function AppointmentDate({ navigation, route }) {
     const currentDate = selectedDate || date;
     setShow(Platform.OS === "ios");
     setDate(currentDate);
+
     console.log(currentDate);
     //tempdate
     let tempdate = new Date(currentDate);
+    const month= tempdate.getMonth() +1;
     let fdate =
       tempdate.getDate() +
       "/" +
-      tempdate.getMonth() +
+      month +
       "/" +
       tempdate.getFullYear();
     let ftime = tempdate.getHours() + ":" + tempdate.getMinutes();

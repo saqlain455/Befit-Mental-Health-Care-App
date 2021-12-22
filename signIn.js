@@ -107,6 +107,7 @@ export class SignIn extends React.Component {
             this.props.navigation.replace("MyDrawer");
           } else {
             Alert.alert("Username or password is incorrect");
+            console.log(result);
           }
         } else if (this.state.switch === "d") {
           if (result.success == true && result.user.doctor) {
@@ -176,7 +177,7 @@ export class SignIn extends React.Component {
             initial={0}
             hasPadding
             options={[
-              { label: "Patient", value: "p" }, //images.feminino = require('./path_to/assets/img/feminino.png')
+              { label: "User", value: "p" }, //images.feminino = require('./path_to/assets/img/feminino.png')
               { label: "Doctor", value: "d" } //images.masculino = require('./path_to/assets/img/masculino.png')
             ]}
             accessibilityLabel="gender-switch-selector"
@@ -186,7 +187,7 @@ export class SignIn extends React.Component {
               <View style={styles.header}>
                 <Text style={styles.heade_text}>Welcome to BeFit!</Text>
                 <Text style={{ color: "white", marginLeft: 80 }}>
-                  you can use this as patient{" "}
+                  you can use this as User{" "}
                 </Text>
               </View>
               <Animatable.View animation="fadeInUpBig" style={styles.footer}>
@@ -324,7 +325,7 @@ export class SignIn extends React.Component {
                       <Text style={styles.text_sign}>Sign In</Text>
                     </TouchableOpacity>
                   </LinearGradient>
-
+{/* 
                   <TouchableOpacity
                     onPress={() => this.props.navigation.navigate("DoctorReg")}
                     style={[
@@ -335,7 +336,7 @@ export class SignIn extends React.Component {
                     <Text style={([styles.text_sign], { color: "#4dc2f8" })}>
                       Sign up
                     </Text>
-                  </TouchableOpacity>
+                  </TouchableOpacity> */}
                 </View>
               </Animatable.View>
             </React.Fragment>

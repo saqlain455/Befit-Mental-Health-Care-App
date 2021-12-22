@@ -47,6 +47,7 @@ export const First = () => {
       <Stack.Screen name='Health' component={Health} />
       <Stack.Screen name='AppointmentDate' component={AppointmentDate} />
       <Stack.Screen name='OrderMedicine' component={OrderMedicine} />
+      <Stack.Screen name='Payment' component={Payment} />
     </Stack.Navigator>
   )
 }
@@ -262,7 +263,7 @@ export const MyDrawer = ({ navigation }) => {
         })}
         
       /> */}
-            <Drawer.Screen
+            {/* <Drawer.Screen
         name='Audio'
         component={AudioRecor}
         options={({ navigation }) => ({
@@ -270,7 +271,7 @@ export const MyDrawer = ({ navigation }) => {
           headerTintColor: 'blue'
         })}
         
-      />
+      /> */}
       
       
       <Drawer.Screen

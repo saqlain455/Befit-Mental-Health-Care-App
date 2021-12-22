@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { View, ScrollView, Text, Dimensions } from "react-native";
+import { View, ScrollView, Text, Dimensions,Button } from "react-native";
 import {
   RTCPeerConnection,
   RTCIceCandidate,
@@ -10,14 +10,15 @@ import {
   mediaDevices,
   registerGlobals,
 } from "react-native-webrtc";
-import { joinRoom } from "./store/actions/videoActions";
+import { joinRoom,disconnect } from "./store/actions/videoActions";
 import { connect } from "react-redux";
 
 const { width, height } = Dimensions.get("window");
 const VideoCall = (props) => {
+
   useEffect(() => {
-    let isFront = false;
-    console.log(props);
+    let isFront = true;
+    console.log("apppointid",props.route.params.appointmentId);
 
     mediaDevices.enumerateDevices().then((sourceInfos) => {
       // console.log(sourceInfos);
@@ -48,7 +49,7 @@ const VideoCall = (props) => {
         })
         .then((stream) => {
           // Got stream!
-          props.joinRoom(stream);
+          props.joinRoom(stream,props.route.params.appointmentId);
           console.log(stream);
         })
         .catch((error) => {
@@ -113,10 +114,8 @@ const VideoCall = (props) => {
 
           <View>
             {remoteStreams.length > 0
-              ? remoteStreams.map((stream, index) => {
-                  return (
+              ?   (
                     <View
-                      key={index}
                       style={{
                         backgroundColor: "blue",
                         borderWidth: 1,
@@ -129,15 +128,16 @@ const VideoCall = (props) => {
                       }}
                     >
                       <RTCView
-                        streamURL={stream.toURL()}
+                        streamURL={remoteStreams[0].toURL()}
                         style={{ width: 80, height: 330 }}
                       />
                     </View>
-                  );
-                })
+                  )
               : null}
           </View>
         </View>
+        <Button title="Disconnect" onPress={()=>props.disconnect(props.route.params.appointmentId)}></Button>
+
       </View>
     </ScrollView>
   );
@@ -148,4 +148,4 @@ const mapStateToProps = ({ video }) => ({
   video,
 });
 
-export default connect(mapStateToProps, { joinRoom })(VideoCall);
+export default connect(mapStateToProps, { joinRoom,disconnect })(VideoCall);

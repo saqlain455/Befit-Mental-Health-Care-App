@@ -6,7 +6,7 @@
  * @flow strict-local
  */
 
-import {
+ import {
   Button,
   Icon,
   Image,
@@ -19,18 +19,20 @@ import {
   TouchableOpacity,
   View,
   useColorScheme,
-  Alert,
+  ActivityIndicator
 } from "react-native";
 import { Header, LearnMoreLinks } from "react-native/Libraries/NewAppScreen";
 import React, { Component, useEffect, useState } from "react";
 
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { DataTable } from "react-native-paper";
-import DetailPatient from './detailPatient'
 function AcceptedAppointments({ navigation }) {
+
   const [appoinementdata, setdata] = useState([]);
   const [filterAppointment, setfilterAppointment] = useState([]);
+  const [loading, setlaoding]=useState(false)
   const getappointment = async () => {
+    setlaoding(true)
     var myHeaders = new Headers();
     var t, id;
     var data = await AsyncStorage.getItem("data");
@@ -59,27 +61,40 @@ function AcceptedAppointments({ navigation }) {
         console.log("HI bro your appointment data is there");
         console.log(result);
         setdata(result);
+        fiterApoinement(result)
       })
-      .catch((error) => console.log("error", error));
+      .catch((error) => {console.log("error", error)
+        setlaoding(false)
+    });
   };
 
-  async function fiterApoinement() {
-    const ap = await appoinementdata.filter(
-      (item) => item.status === "accepted"
-    );
+  async function fiterApoinement(result) {
+    const ap = await result.filter((item) => item.status === "accepted");
     setfilterAppointment(ap);
   }
 
-  useEffect(() => {
-    fiterApoinement();
-  }, [appoinementdata]);
-
+  useEffect(()=>{
+    setlaoding(false)
+  },[filterAppointment])
   useEffect(() => {
     getappointment();
   }, []);
 
   return (
-    <View>
+    loading ? (
+    <View
+    style={{
+      flex: 1,
+      padding: 20,
+      display: "flex",
+      justifyContent: "center",
+      alignContent: "center",
+    }}
+  >
+    <ActivityIndicator size={300} color="skyblue" />
+    <Text>Loading Data ...</Text>
+  </View>
+) :  <View>
       <View style={styles.container}>
         <DataTable>
           <DataTable.Header>

@@ -128,7 +128,7 @@ function ActiveAppointments({ navigation }) {
           {filterAppointment.map((item,index) => {
            return  <DataTable.Row key={index} style={styles.row}>
               <DataTable.Cell>{item._id}</DataTable.Cell>
-              <DataTable.Cell >{item.date}</DataTable.Cell>
+              <DataTable.Cell >{item.date.substring(0, 10)}</DataTable.Cell>
               <DataTable.Cell>{item.status}</DataTable.Cell>
               <DataTable.Cell>
                 <TouchableOpacity onPress={()=>cancelappointment(item._id)}>

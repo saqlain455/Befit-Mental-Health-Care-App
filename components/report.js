@@ -1,106 +1,172 @@
-import React, { useState,useEffect } from 'react';
-import { Text, View, StyleSheet, Dimensions, ScrollView,Alert,ActivityIndicator,Button,TouchableOpacity } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
-import { MaterialIcons } from '@expo/vector-icons';
+import React, { useState, useEffect } from "react";
+import {
+  Text,
+  View,
+  StyleSheet,
+  Dimensions,
+  ScrollView,
+  Alert,
+  ActivityIndicator,
+  Button,
+  TouchableOpacity,
+} from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs";
+import { MaterialIcons } from "@expo/vector-icons";
 import {
   LineChart,
   BarChart,
-  PieChart, ProgressChart,
+  PieChart,
+  ProgressChart,
   ContributionGraph,
   StackedBarChart,
-  } from 'react-native-chart-kit';
+} from "react-native-chart-kit";
 const Tab = createMaterialTopTabNavigator();
-import AcceptedAppointment from  './report/acceptedAppointment';
+import AcceptedAppointment from "./report/acceptedAppointment";
 import ShareModelData from "./shareModelData";
-  
-export const Report=(props)=> {
-  
-  const [getResult,setResult]=React.useState( {
-    "anger": 0,
-    "boredom": 0,
-    "fear": 0,
-    "hate": 0,
-    "insomnia": 0,
-    "sadness": 0,
+
+export const Report = (props) => {
+  // const [getResult,setResult]=React.useState( {
+  //   "anger": 0,
+  //   "boredom": 0,
+  //   "fear": 0,
+  //   "hate": 0,
+  //   "insomnia": 0,
+  //   "sadness": 0,
+  // });
+  const [getResult, setResult] = React.useState({
+    anger: 0,
+    fear: 0,
+    hate: 0,
+    insomnia: 0,
+    sadness: 0,
+    socialMedia: 0,
   });
-  const [isloading,setloading]=React.useState(true);
+  const [isloading, setloading] = React.useState(true);
 
-
-const shareit=()=>{
-  props.navigation.navigate('ShareModelData',{result:getResult});
-
-  
-}
+  const shareit = () => {
+    props.navigation.navigate("ShareModelData", { result: getResult });
+  };
 
   useEffect(() => {
-    console.log("my props")
-    console.log(props.route.params.Cresult)
-   setResult(props.route.params.Cresult)
-  }, [])
+    console.log("my props");
+    console.log(props.route.params.Cresult);
+    setResult(props.route.params.Cresult);
+  }, []);
 
   useEffect(() => {
-    console.log("now object is cange")
-    console.log(getResult)
-     setloading(false)
+    console.log("now object is cange");
+    console.log(getResult);
+    setloading(false);
+  }, [getResult]);
 
-  }, [getResult])
-
-  return (
-      isloading===true ? <View style={styles.loading}> 
+  return isloading === true ? (
+    <View style={styles.loading}>
       <ActivityIndicator size="large" color="blue" />
-     </View>:
-      <ScrollView>
-
+    </View>
+  ) : (
+    <ScrollView>
       <View style={styles.container}>
-
-      <View  style={{display: 'flex'}}>
-        <TouchableOpacity style={{display: 'flex', alignSelf: 'flex-end',backgroundColor:'red',width:'25%',borderRadius:20,justifyContent:'center',alignItems:'center'}} onPress={shareit} ><Text style={{color:'white',fontSize:20}}>Share it </Text></TouchableOpacity>
+        <View>
+          <BarChart
+            data={{
+              labels: [
+                "anger",
+                "fear",
+                "hate",
+                "insomnia",
+                "sadness",
+                " SocialMedia",
+              ],
+              datasets: [
+                {
+                  data: [
+                    getResult.anger * 100,
+                    getResult.fear * 100,
+                    getResult.hate * 100,
+                    getResult.insomnia * 100,
+                    getResult.sadness * 100,
+                    getResult.socialMedia * 100,
+                  ],
+                },
+              ],
+            }}
+            width={Dimensions.get("window").width}
+            height={400}
+            yAxisLabel={"% "}
+            chartConfig={{
+              backgroundColor: "white",
+              backgroundGradientFrom: "white",
+              backgroundGradientTo: "#99f7e3",
+              decimalPlaces: 0,
+              color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+              style: {
+                borderRadius: 16,
+              },
+            }}
+            style={{ marginVertical: 8, borderRadius: 16 }}
+          />
+        </View>
       </View>
       <View>
-      <BarChart data={{
-      labels: [ 'anger',
-      'boredom',
-      'fear',
-      'hate',
-      'insomnia',
-      'sad',
-      ],
+  <LineChart
+    data={{
+      labels: [                "anger",
+      "fear",
+      "hate",
+      "insomnia",
+      "sadness",
+      "socialMedia",],
       datasets: [
-      {
-      data: [getResult.anger*100, getResult.boredom*100,getResult.fear*100, getResult.hate*100, getResult.insomnia*100, getResult.sadness*100],
-      },
-      ],
-      }}
-      width={Dimensions.get('window').width}
-      height={400}
-      yAxisLabel={'% '} chartConfig={{
-      backgroundColor: 'white',
-      backgroundGradientFrom: 'white',
-      backgroundGradientTo: '#99f7e3',
-      decimalPlaces: 0,
-      color: (opacity = 1) => `rgba(0, 0, 0, ${opacity})`,
+        {
+          data: [
+            getResult.anger * 100,
+            getResult.fear * 100,
+            getResult.hate * 100,
+            getResult.insomnia * 100,
+            getResult.sadness * 100,
+            getResult.socialMedia * 100,
+          ]
+        }
+      ]
+    }}
+    width={Dimensions.get("window").width} // from react-native
+    height={220}
+    yAxisLabel="% "
+    yAxisInterval={1} // optional, defaults to 1
+    chartConfig={{
+      backgroundColor: "#e26a00",
+      backgroundGradientFrom: "#fb8c00",
+      backgroundGradientTo: "#ffa726",
+      decimalPlaces: 2, // optional, defaults to 2dp
+      color: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
+      labelColor: (opacity = 1) => `rgba(255, 255, 255, ${opacity})`,
       style: {
-      borderRadius: 16,
+        borderRadius: 16
       },
-      }}
-      style={{ marginVertical: 8,
-      borderRadius: 16,
-      }}
-      />
-      </View>
-      </View>
-      
-      </ScrollView>
-      
-    );
-  }
+      propsForDots: {
+        r: "6",
+        strokeWidth: "2",
+        stroke: "#ffa726"
+      }
+    }}
+    bezier
+    style={{
+      marginVertical: 8,
+      borderRadius: 16
+    }}
+  />
+</View>
+    </ScrollView>
+  );
+};
 
-  const styles = StyleSheet.create({
-    container: {
+const styles = StyleSheet.create({
+  container: {
     flex: 1,
-    justifyContent: 'center',
-    paddingTop: 30, backgroundColor: '#ecf0f1',
-    paddingRight:50
-    },
-    });
+    justifyContent: "center",
+    paddingTop: 30,
+    backgroundColor: "#ecf0f1",
+    paddingRight: 50,
+  },
+});

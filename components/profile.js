@@ -1,6 +1,6 @@
-import * as ImagePicker from "expo-image-picker";
+// import * as ImagePicker from "expo-image-picker";
 import * as React from "react";
-
+import * as ImagePicker from "react-native-image-picker"
 import {
   Alert,
   Button,
@@ -13,13 +13,13 @@ import {
   TextInput,
   TouchableOpacity,
   View,
-  ActivityIndicator
+  ActivityIndicator,
 } from "react-native";
 import {
   FontAwesome,
   Fontisto,
   Ionicons,
-  MaterialCommunityIcons
+  MaterialCommunityIcons,
 } from "react-native-vector-icons";
 import { useEffect, useState } from "react";
 
@@ -48,11 +48,11 @@ export const Profile = (props) => {
     cnic: "",
     address: "",
     gender: "",
-    dob: ""
+    dob: "",
   });
 
-  const [loading,setloading]=useState(false);
-  function btoa(input) {
+  const [loading, setloading] = useState(false);
+  async function btoa(input) {
     var chars =
       "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
     var str = String(input);
@@ -74,26 +74,26 @@ export const Profile = (props) => {
       }
       block = (block << 8) | charCode;
     }
-    return output;
+    return await output;
   }
-  function arrayBufferToBase64(buffer) {
+  async function arrayBufferToBase64(buffer) {
     var binary = "";
     var bytes = [].slice.call(new Uint8Array(buffer));
     bytes.forEach((b) => (binary += String.fromCharCode(b)));
-    return btoa(binary);
+    return await btoa(binary);
   }
 
-  useEffect(() => {
-    (async () => {
-      if (Platform.OS !== "web") {
-        const { status } =
-          await ImagePicker.requestMediaLibraryPermissionsAsync();
-        if (status !== "granted") {
-          alert("Sorry, we need camera roll permissions to make this work!");
-        }
-      }
-    })();
-  }, []);
+  // useEffect(() => {
+  //   (async () => {
+  //     if (Platform.OS !== "web") {
+  //       const { status } =
+  //         await ImagePicker.requestMediaLibraryPermissionsAsync();
+  //       if (status !== "granted") {
+  //         alert("Sorry, we need camera roll permissions to make this work!");
+  //       }
+  //     }
+  //   })();
+  // }, []);
 
   const updatee = async () => {
     var myHeaders = new Headers();
@@ -115,7 +115,7 @@ export const Profile = (props) => {
       method: "PUT",
       headers: myHeaders,
       body: raw,
-      redirect: "follow"
+      redirect: "follow",
     };
 
     fetch(
@@ -126,6 +126,7 @@ export const Profile = (props) => {
       .then((result) => {
         console.log("HI bro updated data is there");
         console.log(result);
+         Alert.alert("Your profile data has updated");
       })
       .catch((error) => console.log("error", error));
   };
@@ -133,7 +134,7 @@ export const Profile = (props) => {
   //   Tomorrorw i will fetch data from api by user id that is place in asyncStorage
 
   const fetchUserData = async () => {
-    setloading(true)
+    setloading(true);
     var data = await AsyncStorage.getItem("data");
     if (data) {
       console.log("name is here!");
@@ -143,59 +144,110 @@ export const Profile = (props) => {
       await setdata({ ...getdata, name: d.user.username });
       console.log("data is here!");
       console.log(getdata);
-      var myHeaders = new Headers();
-      myHeaders.append("Authorization", "Bearer " + d.token);
+      if (getdata.name==="" && !getdata.email==="") {
+        console.log("hi")
+        var myHeaders = new Headers();
+        myHeaders.append("Authorization", "Bearer " + d.token);
 
-      var requestOptions = {
-        method: "GET",
-        headers: myHeaders,
-        redirect: "follow"
-      };
+        var requestOptions = {
+          method: "GET",
+          headers: myHeaders,
+          redirect: "follow",
+        };
 
-      fetch(
-        "http://192.168.18.48:3000/patient/getownData/" + d.user._id,
-        requestOptions
-      )
-        .then((response) => response.json())
-        .then((result) => {
-          console.log(result);
-          setdata(result);
-          setloading(false)
-          var base64Flag = "data:image/jpeg;base64,";
-          if(result.img){
-            var imageStr = arrayBufferToBase64(result.img.data.data);
-            setimg(base64Flag + imageStr);
-          }
-        })
-        .catch((error) => console.log("error", error));
+        fetch(
+          "http://192.168.18.48:3000/patient/getownData/" + d.user._id,
+          requestOptions
+        )
+          .then((response) => response.json())
+          .then((result) => {
+            getApidata(result);
+          })
+          .catch((error) => {
+            console.log("error", error);
+            setloading(false);
+          });
+      }
+      else{
+        setloading(false);
+      }
     } else {
       console.log("Ohh wrong bro! user data is not given ");
     }
     // console.log(JSON.parse(jsonValue))
   };
-
+  async function getApidata(result) {
+    console.log(result);
+    console.log("get api data call");
+    console.log(result.img.data.data);
+    const base64Flag = "data:image/jpeg;base64,";
+    if (result.img.data.data) {
+      setloading(false);
+      console.log("Image is there");
+      const imageStr = await arrayBufferToBase64(result.img.data.data);
+      setimg(base64Flag + imageStr);
+      setdata(result);
+    } else {
+      console.log("there is not image");
+      setdata(result);
+      setloading(false);
+    }
+  }
   useEffect(() => {
     fetchUserData();
   }, []);
 
-  const pickImage = async () => {
-    let result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsEditing: true,
-      aspect: [4, 3],
-      quality: 1
+  // const pickImage = async () => {
+  //   let result = await ImagePicker.launchImageLibraryAsync({
+  //     mediaTypes: ImagePicker.MediaTypeOptions.All,
+  //     allowsEditing: true,
+  //     aspect: [4, 3],
+  //     quality: 1,
+  //   });
+
+  //   console.log(result);
+
+  //   // let base64Img = `data:image;base64,${result.base64}`;
+  //   // Alert.alert(base64Img);
+  //   if (!result.cancelled) {
+  //     setimg(result.uri);
+  //     handleupload(result.uri);
+  //     //   console.log(result.uri)
+  //   }
+  // };
+
+
+  const pickImage = () => {
+    let options = {
+      storageOptions: {
+        skipBackup: true,
+        path: 'images',
+      },
+    };
+    ImagePicker.launchImageLibrary(options, (response) => {
+      console.log('Response = ', response);
+
+      if (response.didCancel) {
+        console.log('User cancelled image picker');
+      } else if (response.error) {
+        console.log('ImagePicker Error: ', response.error);
+      } else if (response.customButton) {
+        console.log('User tapped custom button: ', response.customButton);
+        alert(response.customButton);
+      } else {
+        const source = { uri: response.uri };
+        console.log('response', JSON.stringify(response));
+        setimg(response.uri);
+        handleupload(response.uri);
+      }
     });
 
-    console.log(result);
+  }
 
-    // let base64Img = `data:image;base64,${result.base64}`;
-    // Alert.alert(base64Img);
-    if (!result.cancelled) {
-      setimg(result.uri);
-      handleupload(result.uri);
-      //   console.log(result.uri)
-    }
-  };
+
+
+
+
 
   // useEffect(() => {
   //   var requestOptions = {
@@ -255,7 +307,7 @@ export const Profile = (props) => {
     var photo = {
       uri: imageofUser,
       type: "image/jpeg",
-      name: "photo.jpg"
+      name: "photo.jpg",
     };
     var data = await AsyncStorage.getItem("data");
     var token = await AsyncStorage.getItem("Token");
@@ -268,7 +320,7 @@ export const Profile = (props) => {
     //data.append("description", "2 panadol");
     fetch("http://192.168.18.48:3000/patient/updateProfilePic/" + d.user._id, {
       method: "put",
-      body: formData
+      body: formData,
     })
       .then((response) => response.text())
       .then((result) => {
@@ -281,27 +333,34 @@ export const Profile = (props) => {
       .catch((error) => console.log("error", error));
   };
 
-  return (
-    loading?      <View style={{ flex: 1, padding: 20,display:'flex',justifyContent:'center',alignContent:'center' }}>
-    <ActivityIndicator size={300} color="skyblue" />
-    <Text>Loading Data ...</Text>
-  </View>:
+  return loading ? (
+    <View
+      style={{
+        flex: 1,
+        padding: 20,
+        display: "flex",
+        justifyContent: "center",
+        alignContent: "center",
+      }}
+    >
+      <ActivityIndicator size={300} color="skyblue" />
+      <Text>Loading Data ...</Text>
+    </View>
+  ) : (
     <View style={styles.container}>
       <ScrollView>
-
-
         <View
           style={{
             height: 200,
             width: "100%",
             justifyContent: "center",
             alignItems: "center",
-            paddingTop: 150
+            paddingTop: 150,
           }}
         >
           <ImageBackground
             source={{
-              uri: getImg
+              uri: getImg,
             }}
             style={{ height: 150, width: 150 }}
             imageStyle={{ borderRadius: 100 }}
@@ -311,7 +370,7 @@ export const Profile = (props) => {
                 display: "flex",
                 justifyContent: "center",
                 alignItems: "center",
-                paddingTop: 50
+                paddingTop: 50,
               }}
             >
               <TouchableOpacity onPress={pickImage}>
@@ -323,7 +382,7 @@ export const Profile = (props) => {
                     opacity: 0.7,
                     borderWidth: 1,
                     borderColor: "#fff",
-                    borderRadius: 10
+                    borderRadius: 10,
                   }}
                 />
               </TouchableOpacity>
@@ -392,7 +451,7 @@ export const Profile = (props) => {
           <View style={styles.input}>
             <Fontisto name="date" size={20} />
             <TextInput
-            placeholder='dd-mm-yy'
+              placeholder="dd-mm-yy"
               value={getdata.dob}
               onChangeText={(value) => {
                 setdata({ ...getdata, dob: value });
@@ -425,7 +484,7 @@ const styles = StyleSheet.create({
     flex: 1,
     display: "flex",
     flexDirection: "column",
-    padding: 8
+    padding: 8,
   },
   input: {
     height: 50,
@@ -435,11 +494,11 @@ const styles = StyleSheet.create({
     borderBottomColor: "grey",
     flex: 1,
     flexDirection: "row",
-    paddingLeft: 10
+    paddingLeft: 10,
   },
   button: {
     alignItems: "center",
-    marginTop: 50
+    marginTop: 50,
   },
   sigIn: {
     width: "100%",
@@ -447,11 +506,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderRadius: 10,
-    marginBottom: 100
+    marginBottom: 100,
   },
   textinput: {
     height: "100%",
     width: "100%",
-    marginLeft: 50
-  }
+    marginLeft: 50,
+  },
 });

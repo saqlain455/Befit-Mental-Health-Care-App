@@ -27,7 +27,7 @@ import  CreateBlog from './doctorcomponents/createBlog'
 import DetailPatient from './doctorcomponents/detailPatient'
 import Prescribedmedicine from "./doctorcomponents/prescribedmedicine";
 import { Report } from "./doctorcomponents/report";
-
+import VideoCall from "./videoCall";
 //import {Profile} from './components/profile.js'
 
 
@@ -159,6 +159,7 @@ export const AppointmentsHistory = () => {
       <Stack1.Screen name='DetailPatient' component={DetailPatient} />
       <Stack1.Screen name='Prescribedmedicine' component={Prescribedmedicine} />
       <Stack1.Screen name='Report' component={Report} />
+      <Stack1.Screen name='VideoCall' component={VideoCall} />
     </Stack1.Navigator>
   )
 }

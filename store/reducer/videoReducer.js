@@ -1,4 +1,4 @@
-import { MY_STREAM, ADD_STREAM, ADD_REMOTE_STREAM } from "../actions/types";
+import { MY_STREAM, ADD_STREAM, ADD_REMOTE_STREAM,Remove_STREAM } from "../actions/types";
 const initalState = {
   myStream: null,
   streams: [],
@@ -23,6 +23,11 @@ export default (state = initalState, { type, payload }) => {
         ...state,
         remoteStreams: [...state.remoteStreams, payload],
       };
+      case Remove_STREAM:
+        return {
+          ...state,
+          streams: [],
+        };
 
     case 'MY_ID':
       return {

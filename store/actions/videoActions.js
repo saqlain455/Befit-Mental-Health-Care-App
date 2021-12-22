@@ -1,4 +1,4 @@
-import { ADD_STREAM, MY_STREAM, ADD_REMOTE_STREAM } from "./types";
+import { ADD_STREAM, MY_STREAM, ADD_REMOTE_STREAM,Remove_STREAM } from "./types";
 import IO from "socket.io-client";
 import Peer from "react-native-peerjs";
 
@@ -11,7 +11,8 @@ export const socket = IO("http://192.168.18.48:5000", {
 });
 
 let my_id = "";
-export const joinRoom = (stream) => async (dispatch) => {
+
+export const joinRoom = (stream,appointmentId) => async (dispatch) => {
   dispatch({ type: MY_STREAM, payload: stream });
   const peerServer = new Peer(undefined, {
     host: "192.168.18.48",
@@ -19,10 +20,11 @@ export const joinRoom = (stream) => async (dispatch) => {
     path: "/mypeer",
     port: "5000",
   });
+  
   peerServer.on("error", (error) => {
     console.log("error", error);
   });
-  const roomID = "adsjfdlfjj111fdlfljffffffffhbjhdhdhjdlfs";
+  const roomID = appointmentId
   peerServer.on("open", (userId) => {
     console.log(`userId`, userId);
     dispatch({
@@ -36,9 +38,18 @@ export const joinRoom = (stream) => async (dispatch) => {
   socket.on("connection", () => {
     console.log("Connected client");
   });
-  socket.on("disconnect", () => {
+  socket.on("user-disconnected", (id) => {
     console.log("leave client");
+    console.log("Disconnect the user")
+      console.log('execute destroy')
+      console.log(id)
+      peerServer.destroy();
   });
+  
+  peerServer.on('disconnected', function() { 
+    console.log("peer disconnect")
+   });
+
 
   socket.on("user-connected", (userId) => {
     console.log("conected user", userId);
@@ -68,8 +79,15 @@ const connectToNewUser = async (userId, stream, dispatch, peerServer) => {
 };
 
 
-export const leaveRoom=()=>{
-    socket.emit("leave-room", { my_id, roomID });
-}
+export const disconnect = (roomID) => async (dispatch) => {
+  dispatch({ type: Remove_STREAM, payload: [] });
+  console.log("Disconnet it",my_id)
+  const id=my_id
+
+ // const roomID='adsjfdlfjj111fdlfljffffffffhbjhdhdhjdlfs'
+  socket.emit("leave-room", {id, roomID });
+  // console.log("Disconnect the user")
+  // peerServer.disconnect();
+};
 
 // i start now fron this file 

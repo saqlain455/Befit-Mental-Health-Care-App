@@ -6,6 +6,7 @@ import { Report } from "./report";
 const DetailPatient = ({navigation,route}) => {
 
     useEffect(()=>{
+      console.log("appint id in detail patient screen",route.params.item._id)
         console.log(route.params.item.patient.name)
     },[])
   return (
@@ -66,6 +67,7 @@ const DetailPatient = ({navigation,route}) => {
           width: "50%",
           height: "5%",
         }}
+        onPress={() => navigation.navigate("VideoCall",{appointmentId:route.params.item._id})}
       >
         <Text>Video call</Text>
       </TouchableOpacity>

@@ -57,7 +57,7 @@ function TextScreen({navigation}) {
       <View style={styles.MainContainer}>
         <ScrollView style={{ height: 500 }}>
           <Text style={{ fontSize: 20, margin: 10 }}>
-            what is your feeling?
+            what's your feeling? if u are confuse and can not express your feeling simply type any sentence
           </Text>
           <TextInput
             style={styles.TextInputStyleClass}

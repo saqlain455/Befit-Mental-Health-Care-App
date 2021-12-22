@@ -23,7 +23,7 @@ const Blog = ({navigation}) => {
 
   const [getlist, setlist] = useState([]);
 
-  const [loading,setloading]=useState(false);
+  const [loading,setloading]=useState(true);
   useEffect(()=>{
     viewBlog()
   },[])
@@ -48,7 +48,6 @@ const Blog = ({navigation}) => {
         fetch("http://192.168.18.48:3000/patient/blog/", requestOptions)
           .then(response => response.json())
           .then(result => {
-            setloading(true)
             setlist(result)
             console.log('your blog result',getlist)
           })
@@ -65,20 +64,20 @@ const Blog = ({navigation}) => {
   },[getlist])
 
   return (
+    loading ? (
+      <View style={{ flex: 1, padding: 20 }}>
+        <ActivityIndicator size="large" color="blue" />
+        <Text>Loading Data ...</Text>
+      </View>
+    )
+    :
     <View style={{ marginHorizontal: 20, paddingTop: 20 }}>
       <View style={{display:'flex',flexDirection:'row',justifyContent:'space-between'}}>
           <Title style={{fontSize:20}}>Befit Health Blogs</Title>
       </View>
       <ScrollView>
         {
-            loading ? (
-              <View style={{ flex: 1, padding: 20 }}>
-                <ActivityIndicator size="large" color="blue" />
-                <Text>Loading Data ...</Text>
-              </View>
-            )
-            :
-       getlist.map((item, index) => {
+       getlist?.map((item, index) => {
           return (
             <View key={index} style={{ paddingTop:50 }} >
               <Blogitem item={item}/>

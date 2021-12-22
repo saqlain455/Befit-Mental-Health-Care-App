@@ -92,13 +92,13 @@ function AcceptedAppointments({ navigation }) {
               <DataTable.Row key={index} style={styles.row}>
                 <DataTable.Cell>{item.doctor.name}</DataTable.Cell>
                 <DataTable.Cell>{item.time}</DataTable.Cell>
-                <DataTable.Cell>{item.date}</DataTable.Cell>
+                <DataTable.Cell>{item.date.substring(0, 10)}</DataTable.Cell>
                 <DataTable.Cell>
                   <Button
                     title="View"
                     style={{ color: "seagreen", fontWeight: "bold" }}
                     onPress={() =>
-                      navigation.navigate("Video-Enable", { item: item.doctor })
+                      navigation.navigate("Video-Enable", { item: item.doctor,appointmentId:item._id })
                     }
                   >
                     {" "}

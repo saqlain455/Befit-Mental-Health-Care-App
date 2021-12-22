@@ -31,7 +31,7 @@ export const VoiceScreen = ({ navigation }) => {
   const [recording, setRecording] = React.useState(false);
   const [Voiceid, setVoiceid] = React.useState('');
   const [resultTranscript, setresultTranscript] = React.useState();
-  const [isloading, setloading] = React.useState(true);
+  const [isloading, setloading] = React.useState(false);
   const [audioInfo,setaudioInfo]=useState({    
     currentPositionSec: undefined,
     currentDurationSec: undefined,
@@ -107,6 +107,7 @@ export const VoiceScreen = ({ navigation }) => {
   }
 
   const getAnalysis = async () => {
+    setloading(true)
     var photo = {
       uri: RecordedURI,
       type: 'audio/mp4',
@@ -127,6 +128,7 @@ export const VoiceScreen = ({ navigation }) => {
         console.log(result.VOICEID);
         Vid = result.VOICEID
         setVoiceid(Vid)
+        setloading(false)
         
       }
       )
@@ -311,24 +313,32 @@ export const VoiceScreen = ({ navigation }) => {
   }, [sound]);
 
   return (
+    isloading ? (
+      <View style={{ flex: 1, padding: 20,display:'flex',justifyContent:'center',alignContent:'center' }}>
+        <ActivityIndicator size={300} color="skyblue" />
+        <Text>Loading Data ...</Text>
+      </View>
+    ):
 
     <View style={styles.container}>
-      <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
+      <View style={{ flex: 1}}>
         <TouchableOpacity onPress={recording ? onStopRecord:onStartRecord}>
           <MaterialIcons name={recording ? "stop" : "keyboard-voice"} size={80} color="blue" />
         </TouchableOpacity>
-        <Button
+        {/* <Button
           title={recording ? 'Stop Recording' : 'Start Recording'}
         // onPress={recording ? stopRecording : startRecording}
-        />
+        /> */}
                 <Button
           title='Start ply'
         onPress={onStartPlay}
         />
         
       </View>
-      <Button title="getAnalysis" onPress={getAnalysis} />
-      <Button title="gettranscription" onPress={gettranscription} />
+      <View style={{display:'flex',marginBottom:200,justifyContent:'space-evenly',alignItems:'stretch'}}>
+        <Button title="Get Id" onPress={getAnalysis} />
+        <Button title="Analysis it " onPress={gettranscription} />
+      </View>
       
     </View>
   );
@@ -336,9 +346,10 @@ export const VoiceScreen = ({ navigation }) => {
  // <Button title="Play Sound" onPress={playSound} />
 const styles = StyleSheet.create({
   container: {
+    display: 'flex',
     flex: 1,
-    justifyContent: 'center',
     backgroundColor: '#ecf0f1',
     padding: 10,
+    justifyContent: 'flex-start', alignItems: 'center' 
   },
 });
