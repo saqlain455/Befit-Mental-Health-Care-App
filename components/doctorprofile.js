@@ -93,7 +93,7 @@ export const DoctorProfile = ({ navigation, route }) => {
     };
 
     fetch(
-      "http://192.168.18.48:3000/patient/getRating/" + doctorid,
+      "http://10.113.61.200:3000/patient/getRating/" + doctorid,
       requestOptions
     )
       .then((response) => response.json())
@@ -125,16 +125,18 @@ export const DoctorProfile = ({ navigation, route }) => {
     <ScrollView>
       <View style={styles.container}>
         <View style={styles.SubContainer}>
-          {/* <Image
+          <Image
             source={{
-              uri: "https://www.istockphoto.com/photo/indian-doctor-gm179011088-25575099",
+              uri: "https://media.istockphoto.com/photos/portrait-of-mature-male-doctor-wearing-white-coat-standing-in-picture-id1203995945?k=20&m=1203995945&s=612x612&w=0&h=g0_ioNezBqP0NXrR_36-A5NDHIR0nLabFFrAQVk4PhA=",
             }}
             style={{ width: 150, height: 150, borderRadius: 150 / 2 }}
-          /> */}
+          />
           <Text style={{ fontSize: 20 }}>{getitem.name}</Text>
-          <View style={{display:'flex',flexDirection:'row'}}>
+          <View style={{ display: "flex", flexDirection: "row" }}>
             <RatingGet rating={ratingTotal} />
-            <Text style={{fontSize:20,paddingLeft:20}}>{ratingTotal}/5</Text>
+            <Text style={{ fontSize: 20, paddingLeft: 20 }}>
+              {ratingTotal}/5
+            </Text>
           </View>
         </View>
         <View style={{ flex: 2 }}>
@@ -148,6 +150,7 @@ export const DoctorProfile = ({ navigation, route }) => {
 
           <View style={{ flex: 1, margin: 20 }}>
             <Button
+            style={{backgroundColor:"red"}}
               mode="contained"
               onPress={() =>
                 navigation.navigate("Payment", { id: route.params.item._id })
@@ -160,7 +163,7 @@ export const DoctorProfile = ({ navigation, route }) => {
             <Text style={{ fontSize: 22 }}>About</Text>
             <View style={{ display: "flex", flexDirection: "row" }}>
               <Text style={styles.text1}>Experience:</Text>
-              <Text style={styles.text2}>{getitem.experience}</Text>
+              <Text style={styles.text2}>{getitem.experience} {"year"}</Text>
             </View>
             <View style={{ flexDirection: "row" }}>
               <Text style={styles.text1}>Email:</Text>
@@ -187,26 +190,19 @@ export const DoctorProfile = ({ navigation, route }) => {
                 style={{
                   backgroundColor: "",
                   flex: 1,
-                  height: 300,
+                  height: 200,
                   margin: 20,
                   flexDirection: "row",
+                  marginTop: 2,
                 }}
               >
-                <View style={{ width: "30%", backgroundColor: "" }}>
-                  <Image
-                    source={{
-                      uri: "https://www.istockphoto.com/photo/indian-doctor-gm179011088-25575099",
-                    }}
-                    style={{ width: 70, height: 70, borderRadius: 150 / 2 }}
-                  />
-                </View>
-                <View style={{ width: "80%" }}>
-                  <View style={{ height: "10%" }}>
+                <View style={{ width: "100%" }}>
+                  <View style={{ height: "20%"}}>
                     <Text style={{ fontSize: 20 }}>{item.patient.name}</Text>
                   </View>
                   <View
                     style={{
-                      height: "50%",
+                      height: "90%",
                       marginRight: 20,
                       backgroundColor: "white",
                     }}
@@ -237,7 +233,8 @@ const styles = StyleSheet.create({
     fontSize: 15,
     marginLeft: 10,
     width: "40%",
-    color: "blue",
+    color: "black",
+    fontWeight:'bold'
   },
   text2: {
     fontSize: 15,

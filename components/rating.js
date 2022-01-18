@@ -65,7 +65,7 @@ export default class Rating extends Component {
     };
 
     return fetch(
-      "http://192.168.18.48:3000/patient/createRating",
+      "http://10.113.61.200:3000/patient/createRating",
       requestOptions
     )
       .then((res) => res.json())
@@ -107,17 +107,17 @@ export default class Rating extends Component {
     }
     return (
       <View style={styles.MainContainer}>
+        <View style={{height:'10%'}}>
+          <Text style={styles.textStyle}>How was your experience with us</Text>
+        </View>
         <TextInput
           multiline={true}
           numberOfLines={5}
           label="Feedback"
-          style={{ height: 100, width: "100%", marginHorizontal: 20 }}
+          style={{ height: 100, width: "100%",flex:1}}
           // value={text}
           onChangeText={(text) => this.setState({ text: text })}
         />
-        <View>
-          <Text style={styles.textStyle}>How was your experience with us</Text>
-        </View>
         <Text style={styles.textStyleSmall}>Please Rate Us</Text>
         {/*View to hold our Stars*/}
         <View style={styles.childView}>{React_Native_Rating_Bar}</View>
@@ -145,7 +145,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    paddingTop: Platform.OS === "ios" ? 20 : 0,
+    paddingTop: 0,
   },
   childView: {
     justifyContent: "center",
@@ -158,6 +158,7 @@ const styles = StyleSheet.create({
     marginTop: 30,
     padding: 15,
     backgroundColor: "#8ad24e",
+    marginBottom: 100
   },
   StarImage: {
     width: 40,

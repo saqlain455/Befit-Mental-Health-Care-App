@@ -3,7 +3,8 @@ import {
   Button,
   Platform,
   Text,
-  View
+  View,
+  TouchableOpacity,
 } from "react-native";
 import {
   Avatar,
@@ -12,7 +13,7 @@ import {
   Button as NativeButton,
   Paragraph,
   Searchbar,
-  Title
+  Title,
 } from "react-native-paper";
 import React, { useEffect, useState } from "react";
 
@@ -29,53 +30,55 @@ export default function AppointmentDate({ navigation, route }) {
   const [doctorId, setdoctorId] = useState("");
   const [loading, setloading] = useState(false);
 
- 
   useEffect(() => {
     console.log("your id is ", route.params.id);
     setdoctorId(route.params.id);
   }, []);
 
   const bookAppoinetmentWithdoctor = async () => {
-
-    if( datebook && timebook){
-      
-    setloading(true);
-    var data = await AsyncStorage.getItem("data");
-    var token = await AsyncStorage.getItem("Token");
-    const d = JSON.parse(data);
-    var patientId = d.user._id;
-    const getdata = {
-      patient: patientId,
-      doctor: doctorId,
-      date: datebook,
-      time: timebook,
-      status: "active"
-    };
-    var raw = JSON.stringify(getdata);
-
-    var myHeaders = new Headers();
-    myHeaders.append("Authorization", "Bearer " + token);
-    myHeaders.append("Content-Type", "application/json");
-    var requestOptions = {
-      method: "post",
-      headers: myHeaders,
-      body: raw,
-      redirect: "follow"
-    };
-
-    fetch("http://192.168.18.48:3000/patient/BookAppointment/", requestOptions)
-      .then((response) => response.text())
-      .then((result) => {
-        console.log("HI bro Appointmenet has saved in db");
-        Alert.alert("Appointmenet has booked");
-        console.log(result);
-        setloading(false);
-      })
-      .catch((error) => console.log("error", error));
+    if(datebook){
+      console.log('datebook',datebook)
 
     }
-    else{
-       Alert.alert("Date and time is required");
+    if (datebook && timebook) {
+      setloading(true);
+      var data = await AsyncStorage.getItem("data");
+      var token = await AsyncStorage.getItem("Token");
+      const d = JSON.parse(data);
+      var patientId = d.user._id;
+      const getdata = {
+        patient: patientId,
+        doctor: doctorId,
+        date: datebook,
+        time: timebook,
+        status: "active",
+      };
+      var raw = JSON.stringify(getdata);
+
+      var myHeaders = new Headers();
+      myHeaders.append("Authorization", "Bearer " + token);
+      myHeaders.append("Content-Type", "application/json");
+      var requestOptions = {
+        method: "post",
+        headers: myHeaders,
+        body: raw,
+        redirect: "follow",
+      };
+
+      fetch(
+        "http://10.113.61.200:3000/patient/BookAppointment/",
+        requestOptions
+      )
+        .then((response) => response.text())
+        .then((result) => {
+          console.log("HI bro Appointmenet has saved in db");
+          Alert.alert("Appointmenet has booked");
+          console.log(result);
+          setloading(false);
+        })
+        .catch((error) => console.log("error", error));
+    } else {
+      Alert.alert("Date and time is required");
     }
   };
 
@@ -87,14 +90,21 @@ export default function AppointmentDate({ navigation, route }) {
     console.log(currentDate);
     //tempdate
     let tempdate = new Date(currentDate);
-    const month= tempdate.getMonth() +1;
-    let fdate =
-      tempdate.getDate() +
-      "/" +
-      month +
-      "/" +
-      tempdate.getFullYear();
+    let dateObj = new Date(date);
+    const month = tempdate.getMonth() + 1;
+    let fdate = tempdate.getDate() + "/" + month + "/" + tempdate.getFullYear();
     let ftime = tempdate.getHours() + ":" + tempdate.getMinutes();
+    // console.log('month',month)
+    // console.log('objmonth',dateObj.getMonth()+1)
+    // if(month==(dateObj.getMonth()+1)){
+
+    //   Alert.alert("You choose pervious date")
+
+    // }
+    // if(month<(dateObj.getMonth()+1)){
+    //   Alert.alert("You choose past date")
+
+    // }
     setText(fdate + "\n" + ftime);
     settimebook(ftime);
     //set there
@@ -124,14 +134,29 @@ export default function AppointmentDate({ navigation, route }) {
       </View>
       <View style={{ marginLeft: 30, marginRight: 30 }}>
         <View>
-          <Button onPress={showDatepicker} title="Select date!" />
+          <TouchableOpacity
+            style={{ backgroundColor: "blue", borderRadius: 20, padding: 8 }}
+            onPress={showDatepicker}
+          >
+            <Text style={{ color: "white", fontSize: 24, textAlign: "center" }}>
+              Select Date
+            </Text>
+          </TouchableOpacity>
         </View>
         <View style={{ marginTop: 10 }}>
-          <Button onPress={showTimepicker} title="Select time!" />
+          <TouchableOpacity
+            style={{ backgroundColor: "blue", borderRadius: 20, padding: 8 }}
+            onPress={showTimepicker}
+          >
+            <Text style={{ color: "white", fontSize: 24, textAlign: "center" }}>
+              Select time!
+            </Text>
+          </TouchableOpacity>
         </View>
       </View>
       {show && (
         <DateTimePicker
+        minimumDate={new Date(date)}
           testID="dateTimePicker"
           value={date}
           mode={mode}
@@ -140,17 +165,21 @@ export default function AppointmentDate({ navigation, route }) {
           onChange={onChange}
         />
       )}
-      <View style={{ margin: 100 }}>
-        <NativeButton
-          disabled={loading}
-          mode="contained"
+
+        <TouchableOpacity
+          style={{
+            backgroundColor: "red",
+            borderRadius: 20,
+            padding: 8,
+            width: "80%"
+            ,margin:40 ,
+          }}
           onPress={bookAppoinetmentWithdoctor}
         >
-          Book Appointment
-        </NativeButton>
-
- 
-      </View>
+          <Text style={{ color: "white", fontSize: 24, textAlign: "center"}}>
+            Book Appointment
+          </Text>
+        </TouchableOpacity>
     </View>
   );
 }

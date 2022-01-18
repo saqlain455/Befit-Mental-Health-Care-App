@@ -54,7 +54,7 @@ export default function Prescribedmedicine({navigation,route}) {
     formData.append('doctor_id', id);
     formData.append("description", desciption);
 
-    fetch('http://192.168.18.48:3000/doctor/PrescribeMedicine', {
+    fetch('http://10.113.61.200:3000/doctor/PrescribeMedicine', {
       method: 'post',
       body: formData,
     })

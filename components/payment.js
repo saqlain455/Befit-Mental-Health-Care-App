@@ -94,8 +94,7 @@ const Payment = ({ navigation, route }) => {
         console.log("Your token");
         console.log(result);
       } else {
-
-        Alert.alert("All fields are required ")
+        Alert.alert("All fields are required ");
       }
       // return result;
     } catch (error) {
@@ -120,7 +119,7 @@ const Payment = ({ navigation, route }) => {
     };
 
     return fetch(
-      "http://192.168.18.48:3000/patient/processPayment",
+      "http://10.113.61.200:3000/patient/processPayment",
       requestOptions
     )
       .then((response) => response.json())
@@ -151,9 +150,9 @@ const Payment = ({ navigation, route }) => {
   //   }
   // };
   return (
-    <ScrollView style={{ marginTop: 50, marginBottom: 50 }}>
-      <View
-        tyle={{
+    <ScrollView style={{ marginTop: 50, marginBottom: 100 }}>
+      {/* <View style={{ marginLeft:20 ,marginRight:20}}
+        style={{
           display: "flex",
           flex: 1,
           justifyContent: "center",
@@ -163,11 +162,11 @@ const Payment = ({ navigation, route }) => {
         <Text style={{ fontSize: 40, alignContent: "center" }}>
           Make a payment
         </Text>
-      </View>
+      </View> */}
 
-      <View>
+      <View style={{ marginLeft:20 ,marginRight:20}}>
         <Text style={{ fontSize: 20 }}>Card Name</Text>
-        <TextInput
+        <TextInput style={{}}
           placeholder="Visa"
           onChangeText={(text) => {
             setName(text);
@@ -175,9 +174,9 @@ const Payment = ({ navigation, route }) => {
         ></TextInput>
       </View>
 
-      <View>
+      <View style={{ marginLeft:20 ,marginRight:20}}>
         <Text style={{ fontSize: 20 }}>cardNumber</Text>
-        <TextInput
+        <TextInput style={{}}
           placeholder="4242424242424242"
           onChangeText={(text) => {
             setNumber(text);
@@ -186,9 +185,9 @@ const Payment = ({ navigation, route }) => {
           keyboardType="numeric"
         ></TextInput>
       </View>
-      <View>
+      <View style={{ marginLeft:20 ,marginRight:20}}>
         <Text style={{ fontSize: 20 }}>cvc</Text>
-        <TextInput
+        <TextInput style={{}}
           placeholder="123"
           onChangeText={(text) => {
             setcvc(text);
@@ -197,9 +196,9 @@ const Payment = ({ navigation, route }) => {
           keyboardType="numeric"
         ></TextInput>
       </View>
-      <View>
+      <View style={{ marginLeft:20 ,marginRight:20}}>
         <Text style={{ fontSize: 20 }}>expiryMonth</Text>
-        <TextInput
+        <TextInput style={{}}
           placeholder="12"
           onChangeText={(text) => {
             setexpiryMonth(text);
@@ -208,9 +207,9 @@ const Payment = ({ navigation, route }) => {
           keyboardType="numeric"
         ></TextInput>
       </View>
-      <View>
+      <View style={{ marginLeft:20 ,marginRight:20}}>
         <Text style={{ fontSize: 20 }}>expiryYear</Text>
-        <TextInput
+        <TextInput style={{}}
           placeholder="2022"
           onChangeText={(text) => {
             setexpiryYear(text);
@@ -220,17 +219,17 @@ const Payment = ({ navigation, route }) => {
         ></TextInput>
       </View>
 
-      <View>
+      <View style={{ marginLeft:20 ,marginRight:20}}>
         <Text style={{ fontSize: 20 }}>country</Text>
-        <TextInput
+        <TextInput style={{}}
           onChangeText={(text) => {
             setcountry(text);
           }}
         ></TextInput>
       </View>
-      <View>
+      <View style={{ marginLeft:20 ,marginRight:20}}>
         <Text style={{ fontSize: 20 }}>Amount</Text>
-        <TextInput
+        <TextInput style={{}}
           keyboardType="numeric"
           onChangeText={(text) => {
             setAmount(text);
@@ -239,6 +238,15 @@ const Payment = ({ navigation, route }) => {
       </View>
 
       <Button
+        color="white"
+        style={{
+          width: "40%",
+          marginLeft: 130,
+          backgroundColor: "red",
+          marginTop: 20,
+          marginBottom: 20,
+          padding: 5
+        }}
         title="Press"
         onPress={() =>
           // getCardToken(name, cardNumber, expiryMonth, expiryYear, cvc, country,Amount)
@@ -349,7 +357,7 @@ export { Payment };
 //     console.log(`token`, token)
 //   };
 //   return (
-//     <View>
+//     <View style={{ marginLeft:20 ,marginRight:20}}>
 //       <Button title="Press" onPress={getCardToken}>Hey</Button>
 //     </View>
 //   );

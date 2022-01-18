@@ -16,13 +16,24 @@ export class Signup extends React.Component {
       username:'',
       password:'',
       secureTextEntry:true,
-      role:''
+      role:'',
+      validatePass:false
     }
   }
 
 //   componentDidMount() {
 //     this.gettoken();
 //  }
+
+ validateCnic = (value) => {
+  if (typeof pattern === "string") {
+    const condition = new RegExp("^[0-9+]{7}@[0-9+]{2}$", "g");
+    const res = condition.test(value);
+    this.setState({validatePass:res})
+    // setvalidateCnic(res);
+    console.log(res);
+  }
+};
 
 
  token(){
@@ -35,32 +46,41 @@ export class Signup extends React.Component {
  }
  
 
-   gettoken(){
-    let u=this.state.username
-    let p=this.state.password
-    console.log(u)
-    console.log(p)
-    var myHeaders = new Headers();
-    myHeaders.append("Authorization", "Bearer  ");
-    myHeaders.append("Content-Type", "application/json");
-    
-    var raw = JSON.stringify({"username":this.state.username,"password":this.state.password});
-  
-    var requestOptions = {
-      method: 'POST',
-      headers: myHeaders,
-      body: raw,
-      redirect: 'follow'
-    };
-
-    return fetch("http://192.168.18.48:3000/users/signup", requestOptions)
-      .then((response) => response.json())
-      .then((result) => {
-        console.log(result);
-        Alert.alert(result.status);
-      })
-      .catch((error) => console.log("error", error));
-
+ gettoken(){
+     const condition = new RegExp("^[0-9+]{7}@[0-9+]{2}$", "g");
+     const res = condition.test(this.state.password);
+     this.setState({validatePass:res})
+     // setvalidateCnic(res);
+     console.log(res);
+     if(res){
+       let u=this.state.username
+       let p=this.state.password
+       console.log(u)
+       console.log(p)
+       var myHeaders = new Headers();
+       myHeaders.append("Authorization", "Bearer  ");
+       myHeaders.append("Content-Type", "application/json");
+       
+       var raw = JSON.stringify({"username":this.state.username,"password":this.state.password});
+     
+       var requestOptions = {
+         method: 'POST',
+         headers: myHeaders,
+         body: raw,
+         redirect: 'follow'
+       };
+   
+       return fetch("http://10.113.61.200:3000/users/signup", requestOptions)
+         .then((response) => response.json())
+         .then((result) => {
+           console.log(result);
+           Alert.alert(result.status);
+         })
+         .catch((error) => console.log("error", error));
+     }
+     else{
+       Alert.alert("Password format should be like 1111111@11")
+     }   
 
   
   //  return fetch(`http://10.0.2.2:3000/users/signup`, {

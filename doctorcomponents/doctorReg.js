@@ -47,7 +47,7 @@ export const DoctorReg = (props) => {
       redirect: "follow"
     };
 
-    fetch("http://192.168.18.48:3000/users/Requestdoctor/", requestOptions)
+    fetch("http://10.113.61.200:3000/users/Requestdoctor/", requestOptions)
       .then((response) => response.text())
       .then((result) => {
         console.log("HI bro doctor has saved in db");
@@ -146,7 +146,7 @@ export const DoctorReg = (props) => {
               (styles.text_input,
               { height: 100, width: 250, borderWidth: 1, padding: 2 })
             }
-            placeholder="Experience"
+            placeholder="About yourself"
           ></TextInput>
         </View>
         <TouchableOpacity

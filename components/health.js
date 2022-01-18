@@ -29,7 +29,7 @@ function TextScreen({navigation}) {
     console.log(getText)
     const t=getText
     formData.append('text', t);
-    fetch('http://192.168.18.48:3000/patient/predictText/'+t, {
+    fetch('http://10.113.61.200:3000/patient/predictText/'+t, {
       method: 'GET',
     })
       .then((response) => response.json())
@@ -56,7 +56,7 @@ function TextScreen({navigation}) {
     <ScrollView style={{ height: 500 }}>
       <View style={styles.MainContainer}>
         <ScrollView style={{ height: 500 }}>
-          <Text style={{ fontSize: 20, margin: 10 }}>
+          <Text style={{ fontSize: 20, margin: 10,color:'#05375a' }}>
             what's your feeling? if u are confuse and can not express your feeling simply type any sentence
           </Text>
           <TextInput
@@ -76,7 +76,7 @@ function TextScreen({navigation}) {
             style={{
               width: '50%',
               height: 40,
-              backgroundColor: 'blue',
+              backgroundColor: 'red',
               alignSelf: 'center',
               marginTop: 30,
               borderRadius: 20,

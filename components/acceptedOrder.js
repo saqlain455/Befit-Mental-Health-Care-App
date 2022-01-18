@@ -47,7 +47,7 @@ function AcceptedOrder({ navigation }) {
       redirect: "follow",
     };
 
-    fetch("http://192.168.18.48:3000/patient/cancelOrder/" + id, requestOptions)
+    fetch("http://10.113.61.200:3000/patient/cancelOrder/" + id, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         console.log("HI bro your Order data is updated");
@@ -77,22 +77,24 @@ function AcceptedOrder({ navigation }) {
       redirect: "follow",
     };
 
-    fetch("http://192.168.18.48:3000/patient/ViewOrder/" + id, requestOptions)
+    fetch("http://10.113.61.200:3000/patient/ViewOrder/" + id, requestOptions)
       .then((response) => response.json())
       .then((result) => {
+        fiterApoinement(result)
         setdata(result);
       })
       .catch((error) => console.log("error", error));
   };
 
-  async function fiterApoinement() {
-    const ap = await appoinementdata.filter((item) => item.status === "accepted");
-    setfilterAppointment(ap);
+  async function fiterApoinement(res) {
+    const ap =  res.filter((item) => item.status === "accepted");
+    setfilterAppointment(await ap);
+
   }
 
-  useEffect(() => {
-    fiterApoinement();
-  }, [appoinementdata]);
+  // useEffect(() => {
+  //   fiterApoinement();
+  // }, [appoinementdata]);
 
   useEffect(() => {
     getappointment();
@@ -108,7 +110,7 @@ function AcceptedOrder({ navigation }) {
             <DataTable.Title>Action</DataTable.Title>
           </DataTable.Header>
 
-          {filterAppointment.map((item, index) => {
+          {filterAppointment?.map((item, index) => {
             return (
               <DataTable.Row key={index} style={styles.row}>
                 <DataTable.Cell> {item._id}</DataTable.Cell>

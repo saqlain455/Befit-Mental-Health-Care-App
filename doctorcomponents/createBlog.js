@@ -16,7 +16,7 @@ import {
 import { Feather, MaterialIcons } from "@expo/vector-icons";
 import React, { useEffect, useState } from "react";
 
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Divider } from "react-native-paper";
 
 export default function CreateBlog() {
@@ -24,14 +24,13 @@ export default function CreateBlog() {
   const [loading, setloading] = useState(true);
   const [title, settitle] = useState(true);
   const [des, setdes] = useState(true);
-  const handleupload = async() => {
+  const handleupload = async () => {
     setloading(false);
     var photo = {
       uri: image,
       type: "image/jpeg",
       name: "order.jpg",
     };
-
 
     var data = await AsyncStorage.getItem("data");
     var token = await AsyncStorage.getItem("Token");
@@ -47,10 +46,10 @@ export default function CreateBlog() {
     formData.append("description", des);
     formData.append("title", title);
     formData.append("poster", id);
-    console.log("this is form data",formData)
-    fetch("http://192.168.18.48:3000/doctor/addblog", {
+    console.log("this is form data", formData);
+    fetch("http://10.113.61.200:3000/doctor/addblog", {
       method: "post",
-      body: formData
+      body: formData,
     })
       .then((response) => response.text())
       .then((result) => {
@@ -93,19 +92,31 @@ export default function CreateBlog() {
     <ScrollView style={{ flex: 1 }}>
       <View style={{ flex: 1, marginTop: 20 }}>
         <View style={{ paddingTop: 2, marginHorizontal: 50 }}>
-          <Text>Title</Text>
           <TextInput
+            placeholder="Title"
             onChangeText={(value) => settitle(value)}
-            style={{ borderWidth: 2, width: "100%", height: 50 }}
+            style={{
+              borderWidth: 1,
+              width: "100%",
+              height: 50,
+              borderRadius: 15,
+              padding:10
+            }}
           ></TextInput>
         </View>
-        <View style={{  marginHorizontal: 50 }}>
-          <Text>Description</Text>
+        <View style={{ marginHorizontal: 50, marginTop: 20 }}>
           <TextInput
+            placeholder="Description"
             multiline={true}
             numberOfLines={10}
             onChangeText={(value) => setdes(value)}
-            style={{ borderWidth: 2, width: "100%", height: 200 }}
+            style={{
+              borderWidth: 1,
+              width: "100%",
+              height: 200,
+              borderRadius: 15,
+              padding:10
+            }}
           ></TextInput>
         </View>
         <View
@@ -130,12 +141,13 @@ export default function CreateBlog() {
           style={{
             flex: 1,
             justifyContent: "center",
-            width: "40%",
+            width: "70%",
             height: 50,
             alignItems: "center",
             backgroundColor: "skyblue",
             margin: 70,
             alignSelf: "center",
+            borderRadius:20
           }}
         >
           <TouchableOpacity onPress={handleupload}>

@@ -63,7 +63,7 @@ export default function AppointmentDate({ navigation, route }) {
       redirect: "follow"
     };
 
-    fetch("http://192.168.18.48:3000/patient/BookAppointment/", requestOptions)
+    fetch("http://10.113.61.200:3000/patient/BookAppointment/", requestOptions)
       .then((response) => response.text())
       .then((result) => {
         console.log("HI bro Appointmenet has saved in db");

@@ -17,7 +17,7 @@ import {
   View,
   ActivityIndicator,
 } from "react-native";
-import React, { Component,useState } from "react";
+import React, { Component, useState } from "react";
 
 import { AppointmentDate } from "./appointmentdate";
 import { MaterialIcons } from "@expo/vector-icons";
@@ -26,7 +26,6 @@ import FontAwesome from "react-native-vector-icons/FontAwesome";
 
 import VideoCall from "../videoCall";
 
-
 export class RatingGet extends React.Component {
   constructor(props) {
     super();
@@ -34,7 +33,6 @@ export class RatingGet extends React.Component {
   componentDidMount() {
     console.log("Your props");
     console.log(this.props.rating);
-    
   }
   render() {
     let React_Native_Rating_Bar = [];
@@ -66,7 +64,6 @@ export class RatingGet extends React.Component {
   }
 }
 
-
 const DoctorprofilewithSendReport = ({ navigation, route }) => {
   const [getitem, setitem] = React.useState([]);
   const [doctorRating, setDoctorRating] = useState([]);
@@ -78,14 +75,12 @@ const DoctorprofilewithSendReport = ({ navigation, route }) => {
   );
 
   React.useEffect(() => {
-    console.log("Appid",route.params.appointmentId)
+    console.log("Appid", route.params.appointmentId);
     // console.log(route.params.item.name);
     // console.log(route.params.item._id);
     // console.log("Router parameters", route.params.item);
     setitem(route.params.item);
   }, []);
-
-
 
   const doctorReview = async (doctorid) => {
     var myHeaders = new Headers();
@@ -103,12 +98,12 @@ const DoctorprofilewithSendReport = ({ navigation, route }) => {
     };
 
     fetch(
-      "http://192.168.18.48:3000/patient/getRating/" + doctorid,
+      "http://10.113.61.200:3000/patient/getRating/" + doctorid,
       requestOptions
     )
       .then((response) => response.json())
       .then((result) => {
-        console.log("what's  wrong there ")
+        console.log("what's  wrong there ");
         console.log(result);
         setDoctorRating(result);
         setloading(false);
@@ -120,9 +115,10 @@ const DoctorprofilewithSendReport = ({ navigation, route }) => {
         console.log("Your avg rating is", avg);
         setratingTotal(avg);
       })
-      .catch((error) =>{ console.log("error", error)
-      setloading(false);
-    });
+      .catch((error) => {
+        console.log("error", error);
+        setloading(false);
+      });
   };
 
   React.useEffect(() => {
@@ -135,27 +131,34 @@ const DoctorprofilewithSendReport = ({ navigation, route }) => {
       <ActivityIndicator size="large" color="blue" />
       <Text>Loading Data ...</Text>
     </View>
-  ) :(
+  ) : (
     <ScrollView>
       <View style={styles.container}>
         <View style={styles.SubContainer}>
           <Image
             source={{
-              uri: "https://th.bing.com/th/id/OIP.c-LsJtQ-CPkgOqk3NQQ3tQHaJQ?pid=ImgDet&rs=1",
-
+              uri: "https://media.istockphoto.com/photos/portrait-of-mature-male-doctor-wearing-white-coat-standing-in-picture-id1203995945?k=20&m=1203995945&s=612x612&w=0&h=g0_ioNezBqP0NXrR_36-A5NDHIR0nLabFFrAQVk4PhA=",
             }}
             style={{ width: 150, height: 150, borderRadius: 150 / 2 }}
           />
           <Text style={{ fontSize: 20 }}>{getitem.name}</Text>
 
-          <View style={{display:'flex',flexDirection:'row'}}>
+          <View style={{ display: "flex", flexDirection: "row" }}>
             <RatingGet rating={ratingTotal} />
-            <Text style={{fontSize:20,paddingLeft:20}}>{ratingTotal}/5</Text>
+            <Text style={{ fontSize: 20, paddingLeft: 20 }}>
+              {ratingTotal}/5
+            </Text>
           </View>
         </View>
         <View style={{ flex: 2 }}>
           <Card>
-            <TouchableOpacity onPress={() => navigation.navigate("VideoCall",{appointmentId:route.params.appointmentId})}>
+            <TouchableOpacity
+              onPress={() =>
+                navigation.navigate("VideoCall", {
+                  appointmentId: route.params.appointmentId,
+                })
+              }
+            >
               <View style={{ alignItems: "center" }}>
                 <MaterialIcons name="video-call" size={50} color="blue" />
               </View>
@@ -188,14 +191,17 @@ const DoctorprofilewithSendReport = ({ navigation, route }) => {
           </View>
         </View>
 
-        <View style={{flexDirection:"row", justifyContent:'space-between'}}>
+        <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+          <Text style={{ fontSize: 20, marginLeft: 20 }}>Patients review</Text>
 
-            <Text style={{ fontSize: 20, marginLeft: 20 }}>
-              Patients review
-            </Text>
-  
-             <Button  mode="contained" onPress={()=>navigation.navigate("Rating",{id:getitem._id})}   labelStyle={{fontSize: 10}} style={{marginRight: 20,}} >Give Review</Button>
-  
+          <Button
+            mode="contained"
+            onPress={() => navigation.navigate("Rating", { id: getitem._id })}
+            labelStyle={{ fontSize: 10 }}
+            style={{ marginRight: 20 }}
+          >
+            Give Review
+          </Button>
         </View>
         <ScrollView>
           {doctorRating.map((item, index) => {
@@ -205,26 +211,18 @@ const DoctorprofilewithSendReport = ({ navigation, route }) => {
                 style={{
                   backgroundColor: "",
                   flex: 1,
-                  height: 300,
+                  height: 200,
                   margin: 20,
                   flexDirection: "row",
                 }}
               >
-                <View style={{ width: "30%", backgroundColor: "" }}>
-                  {/* <Image
-                    source={{
-                      uri: "https://www.istockphoto.com/photo/indian-doctor-gm179011088-25575099",
-                    }}
-                    style={{ width: 70, height: 70, borderRadius: 150 / 2 }}
-                  /> */}
-                </View>
-                <View style={{ width: "80%" }}>
-                  <View style={{ height: "10%" }}>
+                <View style={{ width: "100%" }}>
+                  <View style={{ height: "20%" }}>
                     <Text style={{ fontSize: 20 }}>{item.patient.name}</Text>
                   </View>
                   <View
                     style={{
-                      height: "50%",
+                      height: "90%",
                       marginRight: 20,
                       backgroundColor: "white",
                     }}

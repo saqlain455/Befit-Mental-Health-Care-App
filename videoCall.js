@@ -1,5 +1,12 @@
 import React, { useEffect } from "react";
-import { View, ScrollView, Text, Dimensions,Button } from "react-native";
+import {
+  View,
+  ScrollView,
+  Text,
+  Dimensions,
+  Button,
+  TouchableOpacity,
+} from "react-native";
 import {
   RTCPeerConnection,
   RTCIceCandidate,
@@ -10,15 +17,15 @@ import {
   mediaDevices,
   registerGlobals,
 } from "react-native-webrtc";
-import { joinRoom,disconnect } from "./store/actions/videoActions";
+import Feather from "react-native-vector-icons/Feather";
+import { joinRoom, disconnect } from "./store/actions/videoActions";
 import { connect } from "react-redux";
 
 const { width, height } = Dimensions.get("window");
 const VideoCall = (props) => {
-
   useEffect(() => {
     let isFront = true;
-    console.log("apppointid",props.route.params.appointmentId);
+    console.log("apppointid", props.route.params.appointmentId);
 
     mediaDevices.enumerateDevices().then((sourceInfos) => {
       // console.log(sourceInfos);
@@ -49,7 +56,7 @@ const VideoCall = (props) => {
         })
         .then((stream) => {
           // Got stream!
-          props.joinRoom(stream,props.route.params.appointmentId);
+          props.joinRoom(stream, props.route.params.appointmentId);
           console.log(stream);
         })
         .catch((error) => {
@@ -57,7 +64,6 @@ const VideoCall = (props) => {
           // Log error
         });
     });
-    
   }, []);
 
   const { streams, remoteStreams } = props.video;
@@ -65,7 +71,7 @@ const VideoCall = (props) => {
   // console.log(streams)
   // console.log(props.video.myStream)
   // console.log("end stream")
-  console.log(`streams.length`, streams.length)
+  console.log(`streams.length`, streams.length);
   return (
     <ScrollView style={{ display: "flex", flex: 1, padding: 10 }}>
       <View
@@ -85,9 +91,9 @@ const VideoCall = (props) => {
           />
         ) : null}
       </View>
-      <View style={{ backgroundColor: "black" }}>
+      <View style={{}}>
         <View
-          style={{ display: "flex", flex: 1, paddingTop: 10, width: "100%", }}
+          style={{ display: "flex", flex: 1, paddingTop: 10, width: "100%" }}
         >
           {streams.length > 0
             ? streams.map((stream, index) => {
@@ -113,31 +119,45 @@ const VideoCall = (props) => {
             : null}
 
           <View>
-            {remoteStreams.length > 0
-              ?   (
-                    <View
-                      style={{
-                        backgroundColor: "blue",
-                        borderWidth: 1,
-                        borderColor: "#fff",
-                        marginRight: 10,
-                        justifyContent: "center",
-                        alignItems: "center",
-                        width: "100%",
-                        height: height * 0.4,
-                      }}
-                    >
-                      <RTCView
-                        streamURL={remoteStreams[0].toURL()}
-                        style={{ width: 80, height: 330 }}
-                      />
-                    </View>
-                  )
-              : null}
+            {remoteStreams.length > 0 ? (
+              <View
+                style={{
+                  backgroundColor: "blue",
+                  borderWidth: 1,
+                  borderColor: "#fff",
+                  marginRight: 10,
+                  justifyContent: "center",
+                  alignItems: "center",
+                  width: "100%",
+                  height: height * 0.4,
+                }}
+              >
+                <RTCView
+                  streamURL={remoteStreams[0].toURL()}
+                  style={{ width: 80, height: 330 }}
+                />
+              </View>
+            ) : null}
           </View>
         </View>
-        <Button title="Disconnect" onPress={()=>props.disconnect(props.route.params.appointmentId)}></Button>
-
+        <TouchableOpacity
+          style={{
+            width: "23%",
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: "red",
+            marginLeft: 130,
+            borderRadius: 600,
+            borderWidth: 2,
+            height: 80,
+            borderColor: '#fff',
+          }}
+          onPress={() => props.disconnect(props.route.params.appointmentId)}
+        >
+        <Feather name="phone-off" color="white" size={25} />
+        </TouchableOpacity>
+        {/* <Button title="Disconnect" onPress={()=>props.disconnect(props.route.params.appointmentId)}></Button> */}
       </View>
     </ScrollView>
   );
@@ -148,4 +168,4 @@ const mapStateToProps = ({ video }) => ({
   video,
 });
 
-export default connect(mapStateToProps, { joinRoom,disconnect })(VideoCall);
+export default connect(mapStateToProps, { joinRoom, disconnect })(VideoCall);

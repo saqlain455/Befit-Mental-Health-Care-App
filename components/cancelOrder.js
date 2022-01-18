@@ -48,7 +48,7 @@ function CancelOrder({ navigation }) {
       redirect: "follow",
     };
 
-    fetch("http://192.168.18.48:3000/patient/ViewOrder/" + id, requestOptions)
+    fetch("http://10.113.61.200:3000/patient/ViewOrder/" + id, requestOptions)
       .then((response) => response.json())
       .then((result) => {
         console.log("HI bro your order data is there");
@@ -59,8 +59,8 @@ function CancelOrder({ navigation }) {
   };
 
   async function fiterApoinement() {
-    const ap = await appoinementdata.filter((item) => item.status === "canceled");
-    setfilterAppointment(ap);
+    const ap = appoinementdata.filter((item) => item.status === "canceled");
+    setfilterAppointment(await ap);
   }
 
   useEffect(() => {

@@ -50,7 +50,7 @@ export default function OrderMedicine() {
     formData.append("description", desciption);
     formData.append("address", address);
     
-    fetch('http://192.168.18.48:3000/patient/OrderMedicine', {
+    fetch('http://10.113.61.200:3000/patient/OrderMedicine', {
       method: 'post',
       body: formData,
     })
@@ -133,7 +133,7 @@ export default function OrderMedicine() {
         <View
           style={{
             flex: 2,
-            backgroundColor: 'skyblue',
+            backgroundColor: '#FF4500',
             alignItems: 'center',
             justifyContent: 'center',
             borderRadius: 20,
@@ -145,23 +145,21 @@ export default function OrderMedicine() {
           <TouchableOpacity onPress={pickImage}>
             <Feather name="plus-square" size={70} color="white" />
           </TouchableOpacity>
-          <Text>Add image</Text>
+          <Text style={{color:'white'}}>Add image</Text>
         </View>
-        <View style={{ paddingTop: 2, marginHorizontal: 50 }}>
-          <Text>Description</Text>
+        <View style={{ paddingTop: 10, marginHorizontal: 50 }}>
           <TextInput
           value={desciption}
           onChangeText={(text)=>setdesciption(text)}
-            placeholder="write Description"
-            style={{ borderWidth: 2, width: '100%', height: 100 }}></TextInput>
+            placeholder="Description"
+            style={{ borderWidth: 1, width: '100%', height: 100,padding: 20,borderRadius:20 }}></TextInput>
         </View>
-        <View style={{ paddingTop: 2, marginHorizontal: 50 }}>
-          <Text>Address</Text>
+        <View style={{ paddingTop: 10, marginHorizontal: 50 }}>
           <TextInput
-          value={desciption}
+          value={address}
           onChangeText={(text)=>setaddress(text)}
-            placeholder="Post Address"
-            style={{ borderWidth: 2, width: '100%', height: 100 }}></TextInput>
+            placeholder="Address"
+            style={{ borderWidth: 1, width: '100%', height: 100,padding: 20,borderRadius:20 }}></TextInput>
         </View>
         <View
           style={{
@@ -170,9 +168,10 @@ export default function OrderMedicine() {
             width: '40%',
             height: 50,
             alignItems: 'center',
-            backgroundColor: '#0000cc',
+            backgroundColor: 'red',
             margin: 70,
             alignSelf: 'center',
+            borderRadius:20
           }}>
           <TouchableOpacity onPress={handleupload}>
             <Text style={{ color: 'white', fontSize: 20 }}>Submit</Text>

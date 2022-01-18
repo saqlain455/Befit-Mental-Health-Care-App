@@ -3,10 +3,10 @@ import IO from "socket.io-client";
 import Peer from "react-native-peerjs";
 
 // Api uri
-export const API_URI = `http://192.168.18.48:5000/`;
+export const API_URI = `http://10.113.61.200:5000/`;
 
 //socket config
-export const socket = IO("http://192.168.18.48:5000", {
+export const socket = IO("http://10.113.61.200:5000", {
   forceNew: true,
 });
 
@@ -15,7 +15,7 @@ let my_id = "";
 export const joinRoom = (stream,appointmentId) => async (dispatch) => {
   dispatch({ type: MY_STREAM, payload: stream });
   const peerServer = new Peer(undefined, {
-    host: "192.168.18.48",
+    host: "10.113.61.200",
     secure: false,
     path: "/mypeer",
     port: "5000",

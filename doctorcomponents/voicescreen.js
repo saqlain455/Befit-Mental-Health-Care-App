@@ -56,7 +56,7 @@ export const VoiceScreen = ({ navigation }) => {
     // const t = resultTranscript
     var t= re
     formData.append('text', t);
-    fetch('http://192.168.18.48:3000/patient/predictText/' + t, {
+    fetch('http://10.113.61.200:3000/patient/predictText/' + t, {
       method: 'GET',
     })
       .then((response) => response.json())
@@ -79,7 +79,7 @@ export const VoiceScreen = ({ navigation }) => {
         redirect: 'follow'
       };
 
-      fetch("http://192.168.18.48:3000/patient/transcript/" + Voiceid, requestOptions)
+      fetch("http://10.113.61.200:3000/patient/transcript/" + Voiceid, requestOptions)
         .then(response => response.json())
         .then(async(result) => {
           console.log(result.text)
@@ -102,7 +102,7 @@ export const VoiceScreen = ({ navigation }) => {
     var formData = new FormData();
     //append created photo{} to formdata
     formData.append('filesent', photo);
-    await fetch('http://192.168.18.48:3000/patient/sendVoice', {
+    await fetch('http://10.113.61.200:3000/patient/sendVoice', {
       method: 'post',
       body: formData,
     })
